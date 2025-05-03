@@ -20,9 +20,9 @@ if initiate == True:
   n = 'no bug here'
 
   pygame.init()
-  Tree = pygame.image.load('Current Version/images - Current Version/Tree.png')
+  Tree = pygame.image.load('images - Current Version/Tree.png')
   Tree = pygame.transform.scale(Tree, (59, 59))
-  Options = pygame.image.load('Current Version/images - Current Version/Options.png')
+  Options = pygame.image.load('images - Current Version/Options.png')
   Options = pygame.transform.scale(Options, (59, 59))
 
   key_up = False
@@ -52,15 +52,15 @@ class camera:
 
 class map_tiles:
   def __init__(self):
-    self.Iron_Ore = pygame.image.load('Current Version/images - Current Version/Iron Ore.png')
+    self.Iron_Ore = pygame.image.load('images - iron Ore.png')
     self.Iron_Ore = pygame.transform.scale(self.Iron_Ore, (59, 59))
-    self.Copper_Ore = pygame.image.load('Current Version/images - Current Version/Copper Ore.png')
+    self.Copper_Ore = pygame.image.load('images - Current Version/Copper Ore.png')
     self.Copper_Ore = pygame.transform.scale(self.Copper_Ore, (59, 59))
-    self.Coal = pygame.image.load('Current Version/images - Current Version/Coal Ore.png')
+    self.Coal = pygame.image.load('images - Current Version/Coal Ore.png')
     self.Coal = pygame.transform.scale(self.Coal, (59, 59))
-    self.Oil = pygame.image.load('Current Version/images - Current Version/Oil.png')
+    self.Oil = pygame.image.load('images - Current Version/Oil.png')
     self.Oil = pygame.transform.scale(self.Oil, (59, 59))
-    self.Uranium_Ore = pygame.image.load('Current Version/images - Current Version/Uranium Ore.png')
+    self.Uranium_Ore = pygame.image.load('images - Current Version/Uranium Ore.png')
     self.Uranium_Ore = pygame.transform.scale(self.Uranium_Ore, (59, 59))
     self.click = 0
     self.done_pt2 = False
@@ -365,7 +365,7 @@ class loading_page:
     self.create_new_game = pygame.draw.rect(screen, (109, 209, 209), (0,130, 400, 120))
     self.load_game = pygame.draw.rect(screen, (109, 209, 209), (0,250, 350, 70))
     self.quit = pygame.draw.rect(screen, (109, 209, 209), (0,320, 400, 80))
-    screen.blit(pygame.image.load('Current Version/images - Current Version/Beta 1.5 Main page.png'), (0,0))
+    screen.blit(pygame.image.load('images - Current Version/Beta 1.5 Main page.png'), (0,0))
 
 class ui:
   def __init__(self):
@@ -378,10 +378,10 @@ class ui:
     self.close_hitbox = pygame.draw.rect(screen, 'black', (650, 100, 50, 50))
     self.return_hitbox = pygame.draw.rect(screen, 'black', (650, 100, 50, 50))
     self.menu_bar = pygame.draw.rect(screen, 'white', (0,600, 800, 200))
-    self.Build = pygame.image.load('Current Version/images - Current Version/Build.png')
+    self.Build = pygame.image.load('images - Current Version/Build.png')
     self.Build = pygame.transform.scale(self.Build, (59, 59))    
-    self.Exit = pygame.image.load('Current Version/images - Current Version/Exit.png')
-    self.Return = pygame.image.load('Current Version/images - Current Version/Return.png')
+    self.Exit = pygame.image.load('images - Current Version/Exit.png')
+    self.Return = pygame.image.load('images - Current Version/Return.png')
     self.Resume_game = pygame.draw.rect(screen, 'sky blue', (40,70, 500, 80))
     self.Save_game = pygame.draw.rect(screen, 'sky blue', (40,200, 400, 80))
     self.Load_game = pygame.draw.rect(screen, 'sky blue', (40,330, 400, 80))
@@ -393,7 +393,7 @@ class ui:
     self.Save_4 = pygame.draw.rect(screen, 'sky blue', (40,460, 170, 80))
     self.research_center = [False, False, True]
     self.Research_Center = [0,0,0,0]
-    self.Research_Center[0] = pygame.image.load('Current Version/images - Current Version/Research Center.png')
+    self.Research_Center[0] = pygame.image.load('images - Current Version/Research Center.png')
     self.Research_Center[0] = pygame.transform.scale(self.Research_Center[0], (59, 59))
     self.Research_Center[1] = pygame.transform.rotate(self.Research_Center[0], 90)
     self.Research_Center[2] = pygame.transform.rotate(self.Research_Center[0], 180)
@@ -401,7 +401,7 @@ class ui:
     self.construction = [False, False, True]
     self.Construction_Bench = [0,0,0,0]
     self.construction_bench_num = 0
-    self.Construction_Bench[0] = pygame.image.load('Current Version/images - Current Version/Construction Bench.png')
+    self.Construction_Bench[0] = pygame.image.load('images - Current Version/Construction Bench.png')
     self.Construction_Bench[0] = pygame.transform.scale(self.Construction_Bench[0], (59, 59))
     self.Construction_Bench[1] = pygame.transform.rotate(self.Construction_Bench[0], 90)
     self.Construction_Bench[2] = pygame.transform.rotate(self.Construction_Bench[0], 180)
@@ -409,7 +409,7 @@ class ui:
     self.molder = [False, False, False]
     self.Molder = [0,0,0,0]
     self.molder_num = 0
-    self.Molder[0] = pygame.image.load('Current Version/images - Current Version/Molder.png')
+    self.Molder[0] = pygame.image.load('images - Current Version/Molder.png')
     self.Molder[0] = pygame.transform.scale(self.Molder[0], (59, 59))
     self.Molder[1] = pygame.transform.rotate(self.Molder[0], 90)
     self.Molder[2] = pygame.transform.rotate(self.Molder[0], 180)
@@ -417,7 +417,7 @@ class ui:
     self.smelter = [False, False, False]
     self.Smelter = [0,0,0,0]
     self.smelter_num = 0
-    self.Smelter[0] = pygame.image.load('Current Version/images - Current Version/Smelter.png')
+    self.Smelter[0] = pygame.image.load('images - Current Version/Smelter.png')
     self.Smelter[0] = pygame.transform.scale(self.Smelter[0], (59, 59))
     self.Smelter[1] = pygame.transform.rotate(self.Smelter[0], 90)
     self.Smelter[2] = pygame.transform.rotate(self.Smelter[0], 180)
@@ -425,22 +425,22 @@ class ui:
     self.pipe = [False, False, False]
     self.Pipe = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
     self.pipe_num = 0
-    self.Pipe[0][0] = pygame.image.load('Current Version/images - Current Version/Pipe.png')
+    self.Pipe[0][0] = pygame.image.load('images - Current Version/Pipe.png')
     self.Pipe[0][0] = pygame.transform.scale(self.Pipe[0][0], (59, 59))
     self.Pipe[0][1] = pygame.transform.rotate(self.Pipe[0][0], 90)
     self.Pipe[0][2] = pygame.transform.rotate(self.Pipe[0][0], 180)
     self.Pipe[0][3] = pygame.transform.rotate(self.Pipe[0][0], 270)
-    self.Pipe[1][0] = pygame.image.load('Current Version/images - Current Version/pipe curve.png')
+    self.Pipe[1][0] = pygame.image.load('images - Current Version/pipe curve.png')
     self.Pipe[1][0] = pygame.transform.scale(self.Pipe[1][0], (59, 59))
     self.Pipe[1][1] = pygame.transform.rotate(self.Pipe[1][0], 90)
     self.Pipe[1][2] = pygame.transform.rotate(self.Pipe[1][0], 180)
     self.Pipe[1][3] = pygame.transform.rotate(self.Pipe[1][0], 270)
-    self.Pipe[2][0] = pygame.image.load('Current Version/images - Current Version/3 way pipe junc.png')
+    self.Pipe[2][0] = pygame.image.load('images - Current Version/3 way pipe junc.png')
     self.Pipe[2][0] = pygame.transform.scale(self.Pipe[2][0], (59, 59))
     self.Pipe[2][1] = pygame.transform.rotate(self.Pipe[2][0], 90)
     self.Pipe[2][2] = pygame.transform.rotate(self.Pipe[2][0], 180)
     self.Pipe[2][3] = pygame.transform.rotate(self.Pipe[2][0], 270)
-    self.Pipe[3][0] = pygame.image.load('Current Version/images - Current Version/4 way pipe junc.png')
+    self.Pipe[3][0] = pygame.image.load('images - Current Version/4 way pipe junc.png')
     self.Pipe[3][0] = pygame.transform.scale(self.Pipe[3][0], (59, 59))
     self.Pipe[3][1] = pygame.transform.scale(self.Pipe[3][0], (59, 59))
     self.Pipe[3][2] = pygame.transform.scale(self.Pipe[3][0], (59, 59))
@@ -638,20 +638,20 @@ class ui:
 class inventory:
   def __init__(self):
     self.Pngs = [0,0,0,0,0,0,0,0,0,0,0,0,0]
-    self.Pngs[0] = pygame.image.load('Current Version/images - Current Version/Wood.png')
+    self.Pngs[0] = pygame.image.load('images - Current Version/Wood.png')
     self.Pngs[0] = pygame.transform.scale(self.Pngs[0], (40, 40))
     self.Pngs[1] = pygame.transform.scale(tiles.Iron_Ore, (30, 30))
     self.Pngs[2] = pygame.transform.scale(tiles.Copper_Ore, (30, 30))
     self.Pngs[3] = pygame.transform.scale(tiles.Coal, (30, 30))
-    self.Pngs[4] = pygame.image.load('Current Version/images - Current Version/Iron Ingot.png')
-    self.Pngs[5] = pygame.image.load('Current Version/images - Current Version/Iron Rod.png')
-    self.Pngs[6] = pygame.image.load('Current Version/images - Current Version/Iron Plate.png')
-    self.Pngs[7] = pygame.image.load('Current Version/images - Current Version/Copper Ingot.png')
-    self.Pngs[8] = pygame.image.load('Current Version/images - Current Version/Wire.png')
-    self.Pngs[9] = pygame.image.load('Current Version/images - Current Version/Copper Sheet.png')
-    self.Pngs[10] = pygame.image.load('Current Version/images - Current Version/Rotor.png')
-    self.Pngs[11] = pygame.image.load('Current Version/images - Current Version/Iron Crate.png')
-    self.Pngs[12] = pygame.image.load('Current Version/images - Current Version/Hammer.png')
+    self.Pngs[4] = pygame.image.load('images - iron Ingot.png')
+    self.Pngs[5] = pygame.image.load('images - iron Rod.png')
+    self.Pngs[6] = pygame.image.load('images - iron Plate.png')
+    self.Pngs[7] = pygame.image.load('images - Current Version/Copper Ingot.png')
+    self.Pngs[8] = pygame.image.load('images - Current Version/Wire.png')
+    self.Pngs[9] = pygame.image.load('images - Current Version/Copper Sheet.png')
+    self.Pngs[10] = pygame.image.load('images - Current Version/Rotor.png')
+    self.Pngs[11] = pygame.image.load('images - iron Crate.png')
+    self.Pngs[12] = pygame.image.load('images - Current Version/Hammer.png')
     self.items = [0,0,0,0,0,0,0,0,0,0,0,0,0]
     self.num = [0,0,0,0,0,0,0,0,0,0,0,0,0]
     self.Tab = False
@@ -733,10 +733,10 @@ class buildings:
     self.space1 = False
     self.machines = ['smelter', 'molder']
     self.machines_recipe = []
-    self.construction_bench_recipes = [[[['1','Current Version\images - Current Version\Inv Iron Ore.png']], ['1',  'Current Version\images - Current Version\Iron Ingot.png']],[[['1', 'Current Version\images - Current Version\Inv Wood.png'], ['1', 'Current Version\images - Current Version\Iron Rod.png']], ['1', 'Current Version\images - Current Version\Hammer.png']]]
+    self.construction_bench_recipes = [[[['1','images - Current Version\Inv Iron Ore.png']], ['1',  'images - Current Version\Iron Ingot.png']],[[['1', 'images - Current Version\Inv Wood.png'], ['1', 'images - Current Version\Iron Rod.png']], ['1', 'images - Current Version\Hammer.png']]]
     self.researches = ['iron basics']
-    self.research_costs = [[['20',  'Current Version\images - Current Version\Iron Ingot.png']]]
-    self.machines_recipes = [[[[['1','Current Version\images - Current Version\Inv Iron Ore.png', True]], ['1',  'Current Version\images - Current Version\Iron Liquid.png', False]], [[['1', 'Current Version\images - Current Version\Inv Copper Ore.png', True]], ['1', 'Current Version\images - Current Version\Copper Liquid.png', False]]], [[[['1', 'Current Version\images - Current Version\Iron Liquid.png', False]], ['1',  'Current Version\images - Current Version\Iron Ingot.png', True]], [[['1', 'Current Version\images - Current Version\Copper Liquid.png', False]], ['1',  'Current Version\images - Current Version\Copper Ingot.png', True]]]]
+    self.research_costs = [[['20',  'images - Current Version\Iron Ingot.png']]]
+    self.machines_recipes = [[[[['1','images - Current Version\Inv Iron Ore.png', True]], ['1',  'images - Current Version\Iron Liquid.png', False]], [[['1', 'images - Current Version\Inv Copper Ore.png', True]], ['1', 'images - Current Version\Copper Liquid.png', False]]], [[[['1', 'images - Current Version\Iron Liquid.png', False]], ['1',  'images - Current Version\Iron Ingot.png', True]], [[['1', 'images - Current Version\Copper Liquid.png', False]], ['1',  'images - Current Version\Copper Ingot.png', True]]]]
 
   def Constuction_table(self, i, recipe, imp, out, back):
     z = self.construction_bench_recipes.index(recipe)
@@ -1247,56 +1247,56 @@ while True:
     if build_menu == True and Buildings.i == -1:
       Ui.new_turn = True
       # [number, [['amount 1', 'amount image 1'], ['amount 2', 'amount image 2']], 'name', [Ui.lower_case_name, Ui.upper_case_name], [1 time use (True/False), [[inv.items[?], amount, ?], [inv.items[?], amount, ?]]]]
-      [inv.items[5], inv.items[6]] = Ui.Placement_system([0, [['10', 'Current Version\images - Current Version\Iron Rod.png'], ['10', 'Current Version\images - Current Version\Iron Plate.png']], 'molder', [Ui.molder, Ui.Molder], [False, [[inv.items[5], 10, 5], [inv.items[6], 1, 6]]]])
-      [inv.items[0]] = Ui.Placement_system([1, [['5', 'Current Version\images - Current Version\Wood.png']], 'construction bench', [Ui.construction, Ui.Construction_Bench], [False, [[inv.items[0], 5, 0]]]])
+      [inv.items[5], inv.items[6]] = Ui.Placement_system([0, [['10', 'images - Current Version\Iron Rod.png'], ['10', 'images - Current Version\Iron Plate.png']], 'molder', [Ui.molder, Ui.Molder], [False, [[inv.items[5], 10, 5], [inv.items[6], 1, 6]]]])
+      [inv.items[0]] = Ui.Placement_system([1, [['5', 'images - Current Version\Wood.png']], 'construction bench', [Ui.construction, Ui.Construction_Bench], [False, [[inv.items[0], 5, 0]]]])
       [] = Ui.Placement_system([2, [], 'research center', [Ui.research_center, Ui.Research_Center], [True, []]])
-      [inv.items[9], inv.items[5]] = Ui.Placement_system([3, [['10', 'Current Version\images - Current Version\Copper Sheet.png'], ['6', 'Current Version\images - Current Version\Iron Rod.png']], 'smelter', [Ui.smelter, Ui.Smelter], [False, [[inv.items[9], 10, 9], [inv.items[5], 6, 5]]]])
-      [inv.items[9]] = Ui.Placement_system([4, [['5', 'Current Version\images - Current Version\Copper Sheet.png']], 'pipe', [Ui.pipe, Ui.Pipe], [False, [[inv.items[9], 5, 9]]]])
+      [inv.items[9], inv.items[5]] = Ui.Placement_system([3, [['10', 'images - Current Version\Copper Sheet.png'], ['6', 'images - Current Version\Iron Rod.png']], 'smelter', [Ui.smelter, Ui.Smelter], [False, [[inv.items[9], 10, 9], [inv.items[5], 6, 5]]]])
+      [inv.items[9]] = Ui.Placement_system([4, [['5', 'images - Current Version\Copper Sheet.png']], 'pipe', [Ui.pipe, Ui.Pipe], [False, [[inv.items[9], 5, 9]]]])
     if Buildings.i != -1:
-      output = Buildings.Constuction_table(Buildings.i, [[['1','Current Version\images - Current Version\Inv Iron Ore.png']], ['1','Current Version\images - Current Version\Iron Ingot.png']],  [[inv.items[1], 1, 1]], [inv.items[4], 1, 4], True)
+      output = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Inv Iron Ore.png']], ['1','images - Current Version\Iron Ingot.png']],  [[inv.items[1], 1, 1]], [inv.items[4], 1, 4], True)
       inv.items[1] = output[0][0][0]
       inv.items[4] = output[1][0]
       if py72 == 'Hammer':
-        output = Buildings.Constuction_table(Buildings.i, [[['1','Current Version\images - Current Version\Inv Wood.png'], ['1','Current Version\images - Current Version\Iron Rod.png']], ['1','Current Version\images - Current Version\Hammer.png']],  [[inv.items[0], 1], [inv.items[5], 2]], [inv.items[12], 1], False)
+        output = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Inv Wood.png'], ['1','images - Current Version\Iron Rod.png']], ['1','images - Current Version\Hammer.png']],  [[inv.items[0], 1], [inv.items[5], 2]], [inv.items[12], 1], False)
         inv.items[0] = output[0][0][0]
         inv.items[5] = output[0][1][0]
         inv.items[12] = output[1][0]
-      if [[['1','Current Version\images - Current Version\Iron Ingot.png']], ['1','Current Version\images - Current Version\Iron Rod.png']] in Buildings.construction_bench_recipes:
-        output = Buildings.Constuction_table(Buildings.i, [[['1','Current Version\images - Current Version\Iron Ingot.png']], ['1', 'Current Version\images - Current Version\Iron Rod.png']],  [[inv.items[4], 1]], [inv.items[5], 1], False)
+      if [[['1','images - Current Version\Iron Ingot.png']], ['1','images - Current Version\Iron Rod.png']] in Buildings.construction_bench_recipes:
+        output = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Iron Ingot.png']], ['1', 'images - Current Version\Iron Rod.png']],  [[inv.items[4], 1]], [inv.items[5], 1], False)
         inv.items[4] = output[0][0][0]
         inv.items[5] = output[1][0]
-      if [[['1','Current Version\images - Current Version\Iron Ingot.png']], ['1','Current Version\images - Current Version\Iron Plate.png']] in Buildings.construction_bench_recipes:
-        output = Buildings.Constuction_table(Buildings.i, [[['1','Current Version\images - Current Version\Iron Ingot.png']], ['1','Current Version\images - Current Version\Iron Plate.png']], [[inv.items[4], 1]], [inv.items[6], 1], False)
+      if [[['1','images - Current Version\Iron Ingot.png']], ['1','images - Current Version\Iron Plate.png']] in Buildings.construction_bench_recipes:
+        output = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Iron Ingot.png']], ['1','images - Current Version\Iron Plate.png']], [[inv.items[4], 1]], [inv.items[6], 1], False)
         inv.items[4] = output[0][0][0]
         inv.items[6] = output[1][0]
-      if [[['1','Current Version\images - Current Version\Inv Copper Ore.png']], ['1','Current Version\images - Current Version\Copper Ingot.png']] in Buildings.construction_bench_recipes:
-        output = Buildings.Constuction_table(Buildings.i, [[['1','Current Version\images - Current Version\Inv Copper Ore.png']], ['1','Current Version\images - Current Version\Copper Ingot.png']], [[inv.items[2], 1]], [inv.items[7], 1], False)
+      if [[['1','images - Current Version\Inv Copper Ore.png']], ['1','images - Current Version\Copper Ingot.png']] in Buildings.construction_bench_recipes:
+        output = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Inv Copper Ore.png']], ['1','images - Current Version\Copper Ingot.png']], [[inv.items[2], 1]], [inv.items[7], 1], False)
         inv.items[2] = output[0][0][0]
         inv.items[7] = output[1][0]
-      if [[['1','Current Version\images - Current Version\Copper Ingot.png']], ['1','Current Version\images - Current Version\Wire.png']] in Buildings.construction_bench_recipes:
-        output = Buildings.Constuction_table(Buildings.i, [[['1','Current Version\images - Current Version\Copper Ingot.png']], ['1','Current Version\images - Current Version\Wire.png']],  [[inv.items[7], 1]], [inv.items[8], 1], False)
+      if [[['1','images - Current Version\Copper Ingot.png']], ['1','images - Current Version\Wire.png']] in Buildings.construction_bench_recipes:
+        output = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Copper Ingot.png']], ['1','images - Current Version\Wire.png']],  [[inv.items[7], 1]], [inv.items[8], 1], False)
         inv.items[7] = output[0][0][0]
         inv.items[8] = output[1][0]
-      if [[['1','Current Version\images - Current Version\Copper Ingot.png']], ['1','Current Version\images - Current Version\Copper Sheet.png']] in Buildings.construction_bench_recipes:
-        output = Buildings.Constuction_table(Buildings.i, [[['1','Current Version\images - Current Version\Copper Ingot.png']], ['1','Current Version\images - Current Version\Copper Sheet.png']],  [[inv.items[7], 1]], [inv.items[9], 1], False)
+      if [[['1','images - Current Version\Copper Ingot.png']], ['1','images - Current Version\Copper Sheet.png']] in Buildings.construction_bench_recipes:
+        output = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Copper Ingot.png']], ['1','images - Current Version\Copper Sheet.png']],  [[inv.items[7], 1]], [inv.items[9], 1], False)
         inv.items[7] = output[0][0][0]
         inv.items[9] = output[1][0]
-      if [[['5','Current Version\images - Current Version\Iron Rod.png'], ['5','Current Version\images - Current Version\Iron Plate.png'], ['5','Current Version\images - Current Version\Wire.png']], ['1','Current Version\images - Current Version\Rotor.png']] in Buildings.construction_bench_recipes:
-        output = Buildings.Constuction_table(Buildings.i, [[['5','Current Version\images - Current Version\Iron Rod.png'], ['5','Current Version\images - Current Version\Iron Plate.png'], ['5','Current Version\images - Current Version\Wire.png']], ['1', 'Current Version\images - Current Version\Rotor.png']],  [[inv.items[5], 5], [inv.items[6], 5], [inv.items[8], 5]], [inv.items[10], 1], False)
+      if [[['5','images - Current Version\Iron Rod.png'], ['5','images - Current Version\Iron Plate.png'], ['5','images - Current Version\Wire.png']], ['1','images - Current Version\Rotor.png']] in Buildings.construction_bench_recipes:
+        output = Buildings.Constuction_table(Buildings.i, [[['5','images - Current Version\Iron Rod.png'], ['5','images - Current Version\Iron Plate.png'], ['5','images - Current Version\Wire.png']], ['1', 'images - Current Version\Rotor.png']],  [[inv.items[5], 5], [inv.items[6], 5], [inv.items[8], 5]], [inv.items[10], 1], False)
         inv.items[5] = output[0][0][0]
         inv.items[6] = output[0][1][0]
         inv.items[8] = output[0][2][0] 
         inv.items[10] = output[1][0]
-      if [[['12','Current Version\images - Current Version\Iron Rod.png'], ['6','Current Version\images - Current Version\Iron Plate.png']], ['1','Current Version\images - Current Version\Iron Crate.png']] in Buildings.construction_bench_recipes:
-        output = Buildings.Constuction_table(Buildings.i, [[['12','Current Version\images - Current Version\Iron Rod.png'], ['6','Current Version\images - Current Version\Iron Plate.png']], ['1','Current Version\images - Current Version\Iron Crate.png']],  [[inv.items[5], 12], [inv.items[6], 6]], [inv.items[11], 1], False)
+      if [[['12','images - Current Version\Iron Rod.png'], ['6','images - Current Version\Iron Plate.png']], ['1','images - Current Version\Iron Crate.png']] in Buildings.construction_bench_recipes:
+        output = Buildings.Constuction_table(Buildings.i, [[['12','images - Current Version\Iron Rod.png'], ['6','images - Current Version\Iron Plate.png']], ['1','images - Current Version\Iron Crate.png']],  [[inv.items[5], 12], [inv.items[6], 6]], [inv.items[11], 1], False)
         inv.items[5] = output[0][0][0]
         inv.items[6] = output[0][1][0]
         inv.items[11] = output[1][0]
       if 'iron basics' in Buildings.researches:
-        output = Buildings.Research_center(Buildings.i, 'iron basics', [[inv.items[4]], [20]], [[[[['1','Current Version\images - Current Version\Iron Ingot.png']], ['1','Current Version\images - Current Version\Iron Rod.png']], [[['1','Current Version\images - Current Version\Iron Ingot.png']], ['1','Current Version\images - Current Version\Iron Plate.png']]], ['copper basics', 'molders'], [[['30','Current Version\images - Current Version\Iron Rod.png'], ['30','Current Version\images - Current Version\Iron Plate.png']], [['50','Current Version\images - Current Version\Iron Rod.png'], ['50','Current Version\images - Current Version\Iron Plate.png']]], []], True)
+        output = Buildings.Research_center(Buildings.i, 'iron basics', [[inv.items[4]], [20]], [[[[['1','images - Current Version\Iron Ingot.png']], ['1','images - Current Version\Iron Rod.png']], [[['1','images - Current Version\Iron Ingot.png']], ['1','images - Current Version\Iron Plate.png']]], ['copper basics', 'molders'], [[['30','images - Current Version\Iron Rod.png'], ['30','images - Current Version\Iron Plate.png']], [['50','images - Current Version\Iron Rod.png'], ['50','images - Current Version\Iron Plate.png']]], []], True)
         inv.items[4] = output[0][0][0]
       if 'copper basics' in Buildings.researches:
-        output = Buildings.Research_center(Buildings.i, 'copper basics', [[inv.items[5], inv.items[6]] , [30, 30]], [[[[['1','Current Version\images - Current Version\Inv Copper Ore.png']], ['1','Current Version\images - Current Version\Copper Ingot.png']], [[['1','Current Version\images - Current Version\Copper Ingot.png']], ['1','Current Version\images - Current Version\Wire.png']], [[['1','Current Version\images - Current Version\Copper Ingot.png']], ['1','Current Version\images - Current Version\Copper Sheet.png']]], ['manufacturing', 'smelters', 'pipes'], [[['30','Current Version\images - Current Version\Iron Rod.png'], ['30','Current Version\images - Current Version\Iron Plate.png'], ['30','Current Version\images - Current Version\Wire.png'], ['30','Current Version\images - Current Version\Copper Sheet.png']], [['30','Current Version\images - Current Version\Iron Rod.png'], ['30','Current Version\images - Current Version\Iron Plate.png'], ['30','Current Version\images - Current Version\Copper Sheet.png']], [['50','Current Version\images - Current Version\Copper Sheet.png']]], []], True)
+        output = Buildings.Research_center(Buildings.i, 'copper basics', [[inv.items[5], inv.items[6]] , [30, 30]], [[[[['1','images - Current Version\Inv Copper Ore.png']], ['1','images - Current Version\Copper Ingot.png']], [[['1','images - Current Version\Copper Ingot.png']], ['1','images - Current Version\Wire.png']], [[['1','images - Current Version\Copper Ingot.png']], ['1','images - Current Version\Copper Sheet.png']]], ['manufacturing', 'smelters', 'pipes'], [[['30','images - Current Version\Iron Rod.png'], ['30','images - Current Version\Iron Plate.png'], ['30','images - Current Version\Wire.png'], ['30','images - Current Version\Copper Sheet.png']], [['30','images - Current Version\Iron Rod.png'], ['30','images - Current Version\Iron Plate.png'], ['30','images - Current Version\Copper Sheet.png']], [['50','images - Current Version\Copper Sheet.png']]], []], True)
         inv.items[5] = output[0][0][0]
         inv.items[6] = output[0][0][1]
       if 'molders' in Buildings.researches:
@@ -1308,9 +1308,9 @@ while True:
         inv.items[6] = output[0][0][1]
       if 'manufacturing' in Buildings.researches:
         if 'molders' in Buildings.researches:
-          output = Buildings.Research_center(Buildings.i, 'manufacturing', [[inv.items[5], inv.items[6], inv.items[8], inv.items[9]] , [30, 30, 30, 30]], [[[[['5','Current Version\images - Current Version\Iron Rod.png'], ['5','Current Version\images - Current Version\Iron Plate.png'], ['5','Current Version\images - Current Version\Wire.png']], ['1','Current Version\images - Current Version\Rotor.png']], [[['12','Current Version\images - Current Version\Iron Rod.png'], ['6','Current Version\images - Current Version\Iron Plate.png']], ['1','Current Version\images - Current Version\Iron Crate.png']]], [], [], []], False)
+          output = Buildings.Research_center(Buildings.i, 'manufacturing', [[inv.items[5], inv.items[6], inv.items[8], inv.items[9]] , [30, 30, 30, 30]], [[[[['5','images - Current Version\Iron Rod.png'], ['5','images - Current Version\Iron Plate.png'], ['5','images - Current Version\Wire.png']], ['1','images - Current Version\Rotor.png']], [[['12','images - Current Version\Iron Rod.png'], ['6','images - Current Version\Iron Plate.png']], ['1','images - Current Version\Iron Crate.png']]], [], [], []], False)
         else:
-          output = Buildings.Research_center(Buildings.i, 'manufacturing', [[inv.items[5], inv.items[6], inv.items[8], inv.items[9]] , [30, 30, 30, 30]], [[[[['5','Current Version\images - Current Version\Iron Rod.png'], ['5','Current Version\images - Current Version\Iron Plate.png'], ['5','Current Version\images - Current Version\Wire.png']], ['1','Current Version\images - Current Version\Rotor.png']], [[['12','Current Version\images - Current Version\Iron Rod.png'], ['6','Current Version\images - Current Version\Iron Plate.png']], ['1','Current Version\images - Current Version\Iron Crate.png']]], [], [], []], True)
+          output = Buildings.Research_center(Buildings.i, 'manufacturing', [[inv.items[5], inv.items[6], inv.items[8], inv.items[9]] , [30, 30, 30, 30]], [[[[['5','images - Current Version\Iron Rod.png'], ['5','images - Current Version\Iron Plate.png'], ['5','images - Current Version\Wire.png']], ['1','images - Current Version\Rotor.png']], [[['12','images - Current Version\Iron Rod.png'], ['6','images - Current Version\Iron Plate.png']], ['1','images - Current Version\Iron Crate.png']]], [], [], []], True)
       if 'smelters' in Buildings.researches:
         if 'manufacturing' or 'molders' in Buildings.researches:
           output = Buildings.Research_center(Buildings.i, 'smelters', [[inv.items[5], inv.items[6], inv.items[9]] , [30, 30, 30]], [[], [], [], ['smelter']], False)
@@ -1327,10 +1327,10 @@ while True:
         inv.items[5] = output[0][0][0]
         inv.items[6] = output[0][0][1]
         inv.items[9] = output[0][0][2]
-      Buildings.automated_machines(Buildings.i, 'smelter', [[['1','Current Version\images - Current Version\Inv Iron Ore.png', True]], ['1','Current Version\images - Current Version\Iron Liquid.png', False]],  [[1, 1]], [12, 1, 64], True)
-      Buildings.automated_machines(Buildings.i, 'smelter', [[['1','Current Version\images - Current Version\Inv Copper Ore.png', True]], ['1','Current Version\images - Current Version\Copper Liquid.png', False]],  [[2, 1]], [12, 1, 64], False)
-      Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'Current Version\images - Current Version\Iron Liquid.png', False]], ['1',  'Current Version\images - Current Version\Iron Ingot.png', True]],  [[1, 1]], [12, 1, 64], True)
-      Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'Current Version\images - Current Version\Copper Liquid.png', False]], ['1',  'Current Version\images - Current Version\Copper Ingot.png', True]],  [[1, 1]], [12, 1, 64], False)
+      Buildings.automated_machines(Buildings.i, 'smelter', [[['1','images - Current Version\Inv Iron Ore.png', True]], ['1','images - Current Version\Iron Liquid.png', False]],  [[1, 1]], [12, 1, 64], True)
+      Buildings.automated_machines(Buildings.i, 'smelter', [[['1','images - Current Version\Inv Copper Ore.png', True]], ['1','images - Current Version\Copper Liquid.png', False]],  [[2, 1]], [12, 1, 64], False)
+      Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'images - Current Version\Iron Liquid.png', False]], ['1',  'images - Current Version\Iron Ingot.png', True]],  [[1, 1]], [12, 1, 64], True)
+      Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'images - Current Version\Copper Liquid.png', False]], ['1',  'images - Current Version\Copper Ingot.png', True]],  [[1, 1]], [12, 1, 64], False)
     Buildings.automation()
   else:
     if Home_page == True:
