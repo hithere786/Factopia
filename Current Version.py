@@ -52,7 +52,7 @@ class camera:
 
 class map_tiles:
   def __init__(self):
-    self.Iron_Ore = pygame.image.load('images - iron Ore.png')
+    self.Iron_Ore = pygame.image.load('images - Current Version/iron Ore.png')
     self.Iron_Ore = pygame.transform.scale(self.Iron_Ore, (59, 59))
     self.Copper_Ore = pygame.image.load('images - Current Version/Copper Ore.png')
     self.Copper_Ore = pygame.transform.scale(self.Copper_Ore, (59, 59))
@@ -643,14 +643,14 @@ class inventory:
     self.Pngs[1] = pygame.transform.scale(tiles.Iron_Ore, (30, 30))
     self.Pngs[2] = pygame.transform.scale(tiles.Copper_Ore, (30, 30))
     self.Pngs[3] = pygame.transform.scale(tiles.Coal, (30, 30))
-    self.Pngs[4] = pygame.image.load('images - iron Ingot.png')
-    self.Pngs[5] = pygame.image.load('images - iron Rod.png')
-    self.Pngs[6] = pygame.image.load('images - iron Plate.png')
+    self.Pngs[4] = pygame.image.load('images - Current Version/iron Ingot.png')
+    self.Pngs[5] = pygame.image.load('images - Current Version/iron Rod.png')
+    self.Pngs[6] = pygame.image.load('images - Current Version/iron Plate.png')
     self.Pngs[7] = pygame.image.load('images - Current Version/Copper Ingot.png')
     self.Pngs[8] = pygame.image.load('images - Current Version/Wire.png')
     self.Pngs[9] = pygame.image.load('images - Current Version/Copper Sheet.png')
     self.Pngs[10] = pygame.image.load('images - Current Version/Rotor.png')
-    self.Pngs[11] = pygame.image.load('images - iron Crate.png')
+    self.Pngs[11] = pygame.image.load('images - Current Version/iron Crate.png')
     self.Pngs[12] = pygame.image.load('images - Current Version/Hammer.png')
     self.items = [0,0,0,0,0,0,0,0,0,0,0,0,0]
     self.num = [0,0,0,0,0,0,0,0,0,0,0,0,0]
