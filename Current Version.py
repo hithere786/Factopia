@@ -1,4 +1,4 @@
-import pygame, time, random, ast, math
+import pygame, time, random, json, math
 
 py72 = input('Run Game: ')
 
@@ -10,7 +10,7 @@ if initiate == True:
   file4 = 'save files\World 2\location.txt'
   file5 = 'save files\World 3\world.txt'
   file6 = 'save files\World 3\location.txt'
-  file7 = 'save filesn\World 4\world.txt'
+  file7 = 'save files\World 4\world.txt'
   file8 = 'save files\World 4\location.txt'
   files = [[file1, file2], [file3, file4], [file5, file6], [file7, file8]]
 
@@ -289,9 +289,6 @@ class map_tiles:
           elif self.colours[x + 100][y + 100] == 'Tree' or self.colours[x + 100][y + 100] == 'Tree1' or self.colours[x + 100][y + 100] == 'Tree2':
             pygame.draw.rect(screen, 'green', (x * 60 + self.x,y * 60 + self.y, 59, 59))
             screen.blit(Tree, (x * 60 + self.x,y * 60 + self.y))
-          elif self.colours[x + 100][y + 100][0] == 'research center':
-            pygame.draw.rect(screen, 'green', (x * 60 + self.x,y * 60 + self.y, 59, 59))
-            screen.blit(Ui.Research_Center[self.colours[x + 100][y + 100][1]], (x * 60 + self.x,y * 60 + self.y))
           elif self.colours[x + 100][y + 100] == 'Iron':
             pygame.draw.rect(screen, 'green', (x * 60 + self.x,y * 60 + self.y, 59, 59))
             screen.blit(self.Iron_Ore, (x * 60 + self.x,y * 60 + self.y))
@@ -307,18 +304,13 @@ class map_tiles:
           elif self.colours[x + 100][y + 100] == 'Uranium':
             pygame.draw.rect(screen, 'green', (x * 60 + self.x,y * 60 + self.y, 59, 59))
             screen.blit(self.Uranium_Ore, (x * 60 + self.x,y * 60 + self.y))
-          elif self.colours[x + 100][y + 100][0] == 'construction bench':
-            pygame.draw.rect(screen, 'green', (x * 60 + self.x,y * 60 + self.y, 59, 59))
-            screen.blit(Ui.Construction_Bench[self.colours[x + 100][y + 100][1]], (x * 60 + self.x,y * 60 + self.y))
-          elif self.colours[x + 100][y + 100][0] == 'molder':
-            pygame.draw.rect(screen, 'green', (x * 60 + self.x,y * 60 + self.y, 59, 59))
-            screen.blit(Ui.Molder[self.colours[x + 100][y + 100][1]], (x * 60 + self.x,y * 60 + self.y))
-          elif self.colours[x + 100][y + 100][0] == 'pipe':
-            pygame.draw.rect(screen, 'green', (x * 60 + self.x,y * 60 + self.y, 59, 59))
-            screen.blit(Ui.Pipe[self.colours[x + 100][y + 100][1]][self.colours[x + 100][y + 100][2]], (x * 60 + self.x,y * 60 + self.y))
-          elif self.colours[x + 100][y + 100][0] == 'smelter':
-            pygame.draw.rect(screen, 'green', (x * 60 + self.x,y * 60 + self.y, 59, 59))
-            screen.blit(Ui.Smelter[self.colours[x + 100][y + 100][1]], (x * 60 + self.x,y * 60 + self.y))
+          for i in range(len(Ui.Building_Images)):
+            if self.colours[x + 100][y + 100][0] == Ui.all_buildings[i]:
+              pygame.draw.rect(screen, 'green', (x * 60 + self.x,y * 60 + self.y, 59, 59))
+              if isinstance(Ui.Building_Images[i][self.colours[x + 100][y + 100][1]], list):
+                screen.blit(Ui.Building_Images[i][self.colours[x + 100][y + 100][1]][self.colours[x + 100][y + 100][2]], (x * 60 + self.x,y * 60 + self.y))
+              else:
+                screen.blit(Ui.Building_Images[i][self.colours[x + 100][y + 100][1]], (x * 60 + self.x,y * 60 + self.y))
           mouse = pygame.mouse.get_pos()
           if event.type == pygame.MOUSEBUTTONDOWN:
             if mouse[0] > x * 60 + self.x and mouse[0] < x * 60 + self.x + 60 and mouse[1] > y * 60 + self.y and mouse[1] < y * 60 + self.y + 60 and Buildings.i == -1:
@@ -334,14 +326,9 @@ class map_tiles:
                   inv.items[2] += 1
                 if self.colours[x + 100][y + 100] == 'Coal':
                   inv.items[3] += 1
-              if self.colours[x + 100][y + 100][0] == 'construction bench':
-                Buildings.i = Buildings.buildings.index([x + 100, y + 100])
-              if self.colours[x + 100][y + 100][0] == 'research center':
-                Buildings.i = Buildings.buildings.index([x + 100, y + 100])
-              if self.colours[x + 100][y + 100][0] == 'smelter':
-                Buildings.i = Buildings.buildings.index([x + 100, y + 100])
-              if self.colours[x + 100][y + 100][0] == 'molder':
-                Buildings.i = Buildings.buildings.index([x + 100, y + 100])
+              for i in range(len(Ui.all_buildings)):
+                if self.colours[x + 100][y + 100][0] == Ui.all_buildings[i]:
+                  Buildings.i = Buildings.buildings.index([x + 100, y + 100])
               
         y += 1
       x += 1
@@ -446,11 +433,15 @@ class ui:
     self.Pipe[3][2] = pygame.transform.scale(self.Pipe[3][0], (59, 59))
     self.Pipe[3][3] = pygame.transform.scale(self.Pipe[3][0], (59, 59))
     self.buildings = ['research center', 'construction bench']
+    self.all_buildings = ['research center', 'construction bench']
     self.build_stats = [self.molder, self.construction, self.research_center, self.smelter, self.pipe]
+    self.Building_Images = [self.Research_Center, self.Construction_Bench]
     self.selection = False
     self.selections = False
     self.build_hitbox_y = 720
     self.Save = 0
+    self.space = False
+    self.Turn = 0
     self.research_center[2] = True
     self.Miner_Mrk1 = False
     self.BeltMrk1 = False
@@ -494,7 +485,7 @@ class ui:
       with open(files[self.Save][0], 'w') as w:
         w.write(str(tiles.colours))
       with open(files[self.Save][1], 'w') as l:
-        l.write(str([[Buildings.i, Buildings.buildings, Buildings.type], [game_cam.x, game_cam.y], [inv.rescoures_found, inv.items], [Buildings.researches, Buildings.research_costs, Buildings.construction_bench_recipes, Buildings.machines_recipe, Buildings.machines_recipes, Buildings.rescources]]))
+        l.write(str([[Buildings.i, Buildings.buildings, Buildings.type, Buildings.pipe_locs, self.buildings, self.all_buildings, self.build_stats], [game_cam.x, game_cam.y], [inv.rescoures_found, inv.items], [Buildings.researches, Buildings.research_costs, Buildings.construction_bench_recipes, Buildings.machines_recipe, Buildings.machines_recipes, Buildings.rescources]]))
       print('Saved values')
       return True
     else:
@@ -519,12 +510,17 @@ class ui:
         world = w.read()
       with open(files[self.Save][1], 'r') as l:
         location = l.read()
-      game_cam_loc = ast.literal_eval(location)
+      game_cam_loc = eval(location)
       game_cam.x = int(game_cam_loc[1][0])
       game_cam.y = int(game_cam_loc[1][1])
       Buildings.i = game_cam_loc[0][0]
       Buildings.buildings = game_cam_loc[0][1]
       Buildings.type = game_cam_loc[0][2]
+      Buildings.pipe_locs = game_cam_loc[0][3]
+      self.buildings = game_cam_loc[0][4]
+      self.all_buildings = game_cam_loc[0][5]
+      self.build_stats = game_cam_loc[0][6]
+      [self.molder, self.construction, self.research_center, self.smelter, self.pipe] = game_cam_loc[0][6]
       inv.rescoures_found = game_cam_loc[2][0]
       inv.items = game_cam_loc[2][1] 
       Buildings.researches = game_cam_loc[3][0]
@@ -533,9 +529,15 @@ class ui:
       Buildings.machines_recipe = game_cam_loc[3][3]
       Buildings.machines_recipes = game_cam_loc[3][4]
       Buildings.rescources = game_cam_loc[3][5]
+      if 'molder' in self.all_buildings:
+        self.Building_Images.append(self.Molder)
+      if 'smelter' in self.all_buildings:
+        self.Building_Images.append(self.Smelter)
+      if 'pipe' in self.all_buildings:
+        self.Building_Images.append(self.Pipe)
       print('Loaded values:')  
       try:
-        tiles.colours = ast.literal_eval(world)
+        tiles.colours = eval(world)
       except:
         print('creating a new file...')   
       return True
@@ -581,17 +583,37 @@ class ui:
         self.snap_mouse_location = [(x - 30 - game_cam.x) / 60,(y - 30 - game_cam.y) / 60]
         self.Cost_check = 0
         for i in range(len(imp[4][1])):
-          if imp[4][1][i][0] > imp[4][1][i][1]:
+          if imp[4][1][i][0] >= imp[4][1][i][1]:
             self.Cost_check += 1
         if tiles.colours[round(self.snap_mouse_location[0]) + 100][round(self.snap_mouse_location[1]) + 100] == 'green' and self.Cost_check == len(imp[4][1]):
           if isinstance(imp[3][1][0], list):
             tiles.colours[round(self.snap_mouse_location[0]) + 100][round(self.snap_mouse_location[1]) + 100] = [imp[2], self.type, self.direction]
+            if imp[2] == 'pipe':
+              Buildings.pipe_locs[0].append([round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100])
+              pipe_loc = []
+              for i in range(len(Buildings.types[0][self.type])):
+                pipe_loc.append(Buildings.types[0][3].index(Buildings.types[0][self.type][i]) + self.direction)
+                if pipe_loc[i] < 3:
+                  pipe_loc[i] -= 4
+                pipe_loc[i] = Buildings.types[0][3][pipe_loc[i]]
+              Buildings.pipe_locs[1].append(pipe_loc)
+              Buildings.pipe_locs[2].append(0)
+              Buildings.pipe_locs[3].append('')
           else:
             tiles.colours[round(self.snap_mouse_location[0]) + 100][round(self.snap_mouse_location[1]) + 100] = [imp[2], self.direction]
+            Buildings.pipe_locs[0].append([round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100])
+            pipe_loc = []
+            for i in range(len(Buildings.types[1][Buildings.building.index(imp[2])])):
+              pipe_loc.append(Buildings.types[0][3].index(Buildings.types[1][Buildings.building.index(imp[2])][i]) + self.direction)
+              if pipe_loc[i] > 3:
+                pipe_loc[i] -= 4
+              pipe_loc[i] = Buildings.types[0][3][pipe_loc[i]]
+            Buildings.pipe_locs[1].append(pipe_loc)
+            Buildings.pipe_locs[2].append(0)
+            Buildings.pipe_locs[3].append('')
           Buildings.buildings.append([round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100])
           Buildings.machines_recipe.append(0)
-          imp[3][0][0] = False
-          Buildings.rescources.append([[[0,0,0,0]], [0,0,0]])
+          Buildings.rescources.append([[[0,0,0,0]], [0,0,0], [round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100]])
           if imp[4][0] == True:  
             imp[3][0][2] = False
             self.buildings.remove(imp[2])
@@ -611,7 +633,7 @@ class ui:
       if imp[3][0][0] == True and tiles.colours[round(self.snap_mouse_location[0]) + 100][round(self.snap_mouse_location[1]) + 100] == 'green':
         self.snap_mouse_location = [(x - 30) / 60,(y - 30) / 60]
         if isinstance(imp[3][1][0], list) and round(self.snap_mouse_location[1]) * 60 < 540:
-          screen.blit(imp[3][1][self.direction][self.type], (round(self.snap_mouse_location[0]) * 60, round(self.snap_mouse_location[1]) * 60))
+          screen.blit(imp[3][1][self.type][self.direction], (round(self.snap_mouse_location[0]) * 60, round(self.snap_mouse_location[1]) * 60))
         elif round(self.snap_mouse_location[1]) * 60 < 540:
           screen.blit(imp[3][1][self.direction], (round(self.snap_mouse_location[0]) * 60, round(self.snap_mouse_location[1]) * 60))
     if self.r_key == True and self.r_key_check == True:
@@ -634,6 +656,79 @@ class ui:
     self.build_stats[imp[0]] = imp[3][0]
     [self.molder, self.construction, self.research_center, self.smelter, self.pipe] = self.build_stats
     return(out)
+  
+  def tutorial(self):
+    if self.Turn == 0:
+      text_font = pygame.font.SysFont("Ariel", 60)
+      screen.blit(pygame.image.load('images - Current Version/Beta 1.5 Main page.png'), (0,0))
+      pygame.draw.rect(screen, 'White', (0,0, 800, 80))
+      img = text_font.render('Press enter to proceed throughout', True, 'black')
+      screen.blit(img, (10, 10))
+      img = text_font.render('the tutorial', True, 'black')
+      screen.blit(img, (10, 40))
+    if self.Turn == 1:
+      text_font = pygame.font.SysFont("Ariel", 60)
+      screen.blit(pygame.image.load('images - Current Version/Beta 1.5 Main page.png'), (0,0))
+      pygame.draw.rect(screen, 'White', (0,0, 800, 80))
+      img = text_font.render('This is the main menu', True, 'black')
+      screen.blit(img, (10, 10))
+      img = text_font.render('They are very self-explanatory', True, 'black')
+      screen.blit(img, (10, 40))
+    if self.Turn == 2:
+      text_font = pygame.font.SysFont("Ariel", 60)
+      screen.blit(pygame.image.load('images - Current Version/Tutorial 1.png'), (0,0))
+      pygame.draw.rect(screen, 'White', (0,0, 800, 80))
+      img = text_font.render('Collect wood by shaking a tree', True, 'black')
+      screen.blit(img, (10, 10))
+      img = text_font.render('three times(clicking)', True, 'black')
+      screen.blit(img, (10, 40))
+    if self.Turn == 3:
+      text_font = pygame.font.SysFont("Ariel", 60)
+      screen.blit(pygame.image.load('images - Current Version/Tutorial 2.png'), (0,0))
+      pygame.draw.rect(screen, 'White', (0,0, 800, 80))
+      img = text_font.render('You can view your inventory by', True, 'black')
+      screen.blit(img, (10, 10))
+      img = text_font.render('pressing tab', True, 'black')
+      screen.blit(img, (10, 40))
+    if self.Turn == 3:
+      text_font = pygame.font.SysFont("Ariel", 60)
+      screen.blit(pygame.image.load('images - Current Version/Tutorial 3.png'), (0,0))
+      pygame.draw.rect(screen, 'White', (0,0, 800, 80))
+      img = text_font.render('Open the build menu in the bottom', True, 'black')
+      screen.blit(img, (10, 10))
+      img = text_font.render('right when you have 5 wood', True, 'black')
+      screen.blit(img, (10, 40))
+    if self.Turn == 4:
+      text_font = pygame.font.SysFont("Ariel", 60)
+      screen.blit(pygame.image.load('images - Current Version/Tutorial 4.png'), (0,0))
+      pygame.draw.rect(screen, 'White', (0,0, 800, 80))
+      img = text_font.render('Select the construction bench and', True, 'black')
+      screen.blit(img, (10, 10))
+      img = text_font.render('place it over the map', True, 'black')
+      screen.blit(img, (10, 40))
+    if self.Turn == 5:
+      text_font = pygame.font.SysFont("Ariel", 60)
+      screen.blit(pygame.image.load('images - Current Version/Tutorial 5.png'), (0,0))
+      pygame.draw.rect(screen, 'White', (0,0, 800, 80))
+      img = text_font.render('Collect recsources from across the', True, 'black')
+      screen.blit(img, (10, 10))
+      img = text_font.render('map', True, 'black')
+      screen.blit(img, (10, 40))
+    if self.Turn == 6:
+      text_font = pygame.font.SysFont("Ariel", 60)
+      screen.blit(pygame.image.load('images - Current Version/Tutorial 5.png'), (0,0))
+      pygame.draw.rect(screen, 'White', (0,0, 800, 80))
+      img = text_font.render('Continue to craft, make more buildings', True, 'black')
+      screen.blit(img, (10, 10))
+      img = text_font.render('and complete researches', True, 'black')
+      screen.blit(img, (10, 40))
+    if self.Turn == 7:
+      pygame.quit()
+    if self.space == True and self.space2 == False:
+      self.space2 = True
+      self.Turn += 1
+    if self.space == False:
+      self.space2 = False
 
 class inventory:
   def __init__(self):
@@ -718,10 +813,14 @@ class buildings:
     self.machines_rec = [[self.iron_liquid, 'smelter'], [self.copper_liquid, 'smelter'], [self.iron_ingot, 'molder']]
     self.ui = pygame.draw.rect(screen, 'white', (100, 100, 600, 600))
     self.buildings = []
+    self.building = ['research center', 'construction bench', 'molder', 'smelter']
     self.rescources = []
-    self.input = [pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),-1,'']
     self.type = []
+    self.input = [pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),-1,'']
+    self.pipe_locs = [[], [], [], []]
+    self.types = [[[[-1, 0], [1, 0]], [[-1, 0], [0, 1]], [[-1, 0], [0, 1], [1, 0]], [[-1, 0], [0, 1], [1, 0], [0, -1]]], [[], [], [[-1, 0]], [[1, 0]]]]
     self.time = 0
+    self.liquids = [['', 'iron liquid', 'copper liquid'], ['white', 'grey', 'orange']]
     self.mouse_button = False
     self.i = -1
     self.x1 = 0
@@ -739,21 +838,44 @@ class buildings:
     self.machines_recipes = [[[[['1','images - Current Version\Inv Iron Ore.png', True]], ['1',  'images - Current Version\Iron Liquid.png', False]], [[['1', 'images - Current Version\Inv Copper Ore.png', True]], ['1', 'images - Current Version\Copper Liquid.png', False]]], [[[['1', 'images - Current Version\Iron Liquid.png', False]], ['1',  'images - Current Version\Iron Ingot.png', True]], [[['1', 'images - Current Version\Copper Liquid.png', False]], ['1',  'images - Current Version\Copper Ingot.png', True]]]]
 
   def Constuction_table(self, i, recipe, imp, out, back):
-    z = self.construction_bench_recipes.index(recipe)
-    if len(self.type) > i:
-      self.type[i] = tiles.colours[self.buildings[i][0]][self.buildings[i][1]][0]
-      if self.type[i] == 'construction bench':
-        if back == True:
-          self.ui = pygame.draw.rect(screen, 'white', (100, 100, 600, 600))
-          self.z_offset = 0
-        self.z_offsetting = z + self.z_offset
-        text_font = pygame.font.SysFont("Ariel", 60)
-        img = text_font.render('Construction Bench', True, 'black')
-        screen.blit(img, (200,100))
-        self.total_lengths = 0
-        self.offset_reset = 0
-        for length in range(len(self.construction_bench_recipes[z][0])):
-          img = text_font.render((str(imp[length][0]) + '|' + str(self.construction_bench_recipes[z][0][length][0])), True, 'black')
+    if recipe in self.construction_bench_recipes:
+      z = self.construction_bench_recipes.index(recipe)
+      if len(self.type) > i:
+        self.type[i] = tiles.colours[self.buildings[i][0]][self.buildings[i][1]][0]
+        if self.type[i] == 'construction bench':
+          if back == True:
+            self.ui = pygame.draw.rect(screen, 'white', (100, 100, 600, 600))
+            self.z_offset = 0
+          self.z_offsetting = z + self.z_offset
+          text_font = pygame.font.SysFont("Ariel", 60)
+          img = text_font.render('Construction Bench', True, 'black')
+          screen.blit(img, (200,100))
+          self.total_lengths = 0
+          self.offset_reset = 0
+          for length in range(len(self.construction_bench_recipes[z][0])):
+            img = text_font.render((str(imp[length][0]) + '|' + str(self.construction_bench_recipes[z][0][length][0])), True, 'black')
+            [x, y] = img.get_size()
+            if x + self.total_lengths > 580:
+              self.total_lengths = 0
+              self.z_offsetting += 1
+              self.z_offset += 1
+              self.offset_reset += 1
+            self.total_lengths += x + 30
+            img = pygame.image.load(self.construction_bench_recipes[z][0][length][1])
+            if 40 + self.total_lengths > 580:
+              self.total_lengths = 0
+              self.z_offsetting += 1
+              self.z_offset += 1
+              self.offset_reset += 1
+            self.total_lengths += 70
+          img = text_font.render('>', True, 'black')
+          if 40 + self.total_lengths > 580:
+            self.total_lengths = 0
+            self.z_offsetting += 1
+            self.z_offset += 1
+            self.offset_reset += 1
+          self.total_lengths += 70
+          img = text_font.render((str(out[0]) + '|' + str(self.construction_bench_recipes[z][0][length][0])), True, 'black')
           [x, y] = img.get_size()
           if x + self.total_lengths > 580:
             self.total_lengths = 0
@@ -761,35 +883,35 @@ class buildings:
             self.z_offset += 1
             self.offset_reset += 1
           self.total_lengths += x + 30
-          img = pygame.image.load(self.construction_bench_recipes[z][0][length][1])
+          img = pygame.image.load(self.construction_bench_recipes[z][1][1])
+          self.total_lengths = 0
+          self.z_offsetting -= self.offset_reset
+          self.z_offset -= self.offset_reset
+          self.recipes[z] = pygame.draw.rect(screen, 'sky blue', (100, 150 + 50 * self.z_offsetting , 600, 40 + self.offset_reset * 50))
+          for length in range(len(self.construction_bench_recipes[z][0])):
+            img = text_font.render((str(imp[length][0]) + '|' + str(self.construction_bench_recipes[z][0][length][0])), True, 'black')
+            [x, y] = img.get_size()
+            if x + self.total_lengths > 580:
+              self.total_lengths = 0
+              self.z_offsetting += 1
+              self.z_offset += 1
+            screen.blit(img, (110 + self.total_lengths,150 + 50 * self.z_offsetting))
+            self.total_lengths += x + 30
+            img = pygame.image.load(self.construction_bench_recipes[z][0][length][1])
+            if 40 + self.total_lengths > 580:
+              self.total_lengths = 0
+              self.z_offsetting += 1
+              self.z_offset += 1
+            screen.blit(img, (110 + self.total_lengths,155 + 50 * self.z_offsetting))
+            self.total_lengths += 70
+          img = text_font.render('>', True, 'black')
           if 40 + self.total_lengths > 580:
             self.total_lengths = 0
             self.z_offsetting += 1
             self.z_offset += 1
-            self.offset_reset += 1
+          screen.blit(img, (110 + self.total_lengths,145 + 50 * self.z_offsetting))
           self.total_lengths += 70
-        img = text_font.render('>', True, 'black')
-        if 40 + self.total_lengths > 580:
-          self.total_lengths = 0
-          self.z_offsetting += 1
-          self.z_offset += 1
-          self.offset_reset += 1
-        self.total_lengths += 70
-        img = text_font.render((str(out[0]) + '|' + str(self.construction_bench_recipes[z][0][length][0])), True, 'black')
-        [x, y] = img.get_size()
-        if x + self.total_lengths > 580:
-          self.total_lengths = 0
-          self.z_offsetting += 1
-          self.z_offset += 1
-          self.offset_reset += 1
-        self.total_lengths += x + 30
-        img = pygame.image.load(self.construction_bench_recipes[z][1][1])
-        self.total_lengths = 0
-        self.z_offsetting -= self.offset_reset
-        self.z_offset -= self.offset_reset
-        self.recipes[z] = pygame.draw.rect(screen, 'sky blue', (100, 150 + 50 * self.z_offsetting , 600, 40 + self.offset_reset * 50))
-        for length in range(len(self.construction_bench_recipes[z][0])):
-          img = text_font.render((str(imp[length][0]) + '|' + str(self.construction_bench_recipes[z][0][length][0])), True, 'black')
+          img = text_font.render((str(out[0]) + '|' + str(self.construction_bench_recipes[z][0][length][0])), True, 'black')
           [x, y] = img.get_size()
           if x + self.total_lengths > 580:
             self.total_lengths = 0
@@ -797,80 +919,66 @@ class buildings:
             self.z_offset += 1
           screen.blit(img, (110 + self.total_lengths,150 + 50 * self.z_offsetting))
           self.total_lengths += x + 30
-          img = pygame.image.load(self.construction_bench_recipes[z][0][length][1])
-          if 40 + self.total_lengths > 580:
-            self.total_lengths = 0
-            self.z_offsetting += 1
-            self.z_offset += 1
+          img = pygame.image.load(self.construction_bench_recipes[z][1][1])
           screen.blit(img, (110 + self.total_lengths,155 + 50 * self.z_offsetting))
-          self.total_lengths += 70
-        img = text_font.render('>', True, 'black')
-        if 40 + self.total_lengths > 580:
-          self.total_lengths = 0
-          self.z_offsetting += 1
-          self.z_offset += 1
-        screen.blit(img, (110 + self.total_lengths,145 + 50 * self.z_offsetting))
-        self.total_lengths += 70
-        img = text_font.render((str(out[0]) + '|' + str(self.construction_bench_recipes[z][0][length][0])), True, 'black')
-        [x, y] = img.get_size()
-        if x + self.total_lengths > 580:
-          self.total_lengths = 0
-          self.z_offsetting += 1
-          self.z_offset += 1
-        screen.blit(img, (110 + self.total_lengths,150 + 50 * self.z_offsetting))
-        self.total_lengths += x + 30
-        img = pygame.image.load(self.construction_bench_recipes[z][1][1])
-        screen.blit(img, (110 + self.total_lengths,155 + 50 * self.z_offsetting))
-    else:  
-      self.type.append(tiles.colours[self.buildings[i][0]][self.buildings[i][1]][0])
-    x, y = pygame.mouse.get_pos()
-    if [self.x1, self.y1] != [x, y] and self.space == True:
-      self.space = False
-    self.x1 = x
-    self.y1 = y
-    if self.recipes[z].collidepoint(x, y) and recipe in self.construction_bench_recipes and self.type[i] == 'construction bench' and tiles.click > 4:
-      for g in range(len(imp)):
-        if imp[g][0] > imp[g][1] - 1 and (event.type == pygame.MOUSEBUTTONDOWN or self.space == True):
-          tiles.click = 0
-          imp[g][0] -= imp[g][1]
-          if g == 0:
-            out[0] += out[1]
-    screen.blit(Ui.Exit, (660, 110))
-    return [imp, out]
-  
-  def Research_center(self, i, recipe, imp, out, back):
-    z = self.researches.index(recipe)
-    if len(self.type) > i:
-      if self.type[i] == 'research center':
-        if back == True:
-          self.ui = pygame.draw.rect(screen, 'white', (100, 100, 600, 600))
-          self.layers = 0
-          self.y = 0
-        f = z + self.y
-        text_font = pygame.font.SysFont("Ariel", 60)
-        img = text_font.render('Research Center', True, 'black')
-        screen.blit(img, (200,100))
-        if recipe in self.researches:
-          self.research[z] = pygame.draw.rect(screen, 'sky blue', (100, 150 + f * 50, 600, 50 * math.ceil(len(self.research_costs[z]) / 3) - 10))
-        img = text_font.render(self.researches[z], True, 'black')
-        screen.blit(img, (100,150 + 50 * f))
-        for d in range(len(self.research_costs[z])):
-          h = d
-          img = text_font.render(self.research_costs[z][d][0], True, 'black')
-          if 400 + 100 * d > 699:
-            h = 0
-            f += 1
-            self.y += 1
-          screen.blit(img, (410 + 100 * h, 155 + 50 * f))
-          screen.blit(pygame.image.load(self.research_costs[z][d][1]), (460 + 100 * h,155 + 50 * f))
-    else:
-      self.type.append(tiles.colours[self.buildings[i][0]][self.buildings[i][1]][0])
-    x, y = pygame.mouse.get_pos()
-    if [self.x1, self.y1] != [x, y] and self.space == True:
+      else:  
+        self.type.append(tiles.colours[self.buildings[i][0]][self.buildings[i][1]][0])
+      x, y = pygame.mouse.get_pos()
+      if [self.x1, self.y1] != [x, y] and self.space == True:
         self.space = False
-    self.x1 = x
-    self.y1 = y
-    if self.research[z].collidepoint(x, y) and recipe in self.researches and self.type[i] == 'research center' and imp[0][0] > imp[1][0] - 1 and tiles.click > 8 and event.type == pygame.MOUSEBUTTONDOWN:
+      self.x1 = x
+      self.y1 = y
+      self.g_check = 0
+      if self.recipes[z].collidepoint(x, y) and self.type[i] == 'construction bench' and tiles.click > 4 and (self.mouse_button == True or self.space == True):
+        for g in range(len(imp)):
+          if imp[g][0] > imp[g][1] - 1:
+            self.g_check += 1
+        if self.g_check == g + 1:
+          tiles.click = 0
+          for g in range(len(imp)):
+            imp[g][0] -= imp[g][1]
+          out[0] += out[1]
+    screen.blit(Ui.Exit, (660, 110))
+    return_line = []
+    for i in range(len(imp)):
+      return_line.append(imp[i][0])
+    return_line.append(out[0])
+    return(return_line)
+  
+  def Research_center(self, i, recipe, imp, out):
+    if recipe in self.researches:
+      z = self.researches.index(recipe)
+      if len(self.type) > i:
+        if self.type[i] == 'research center':
+          if z == 0:
+            self.ui = pygame.draw.rect(screen, 'white', (100, 100, 600, 600))
+            self.layers = 0
+            self.y = 0
+          f = z + self.y
+          text_font = pygame.font.SysFont("Ariel", 60)
+          img = text_font.render('Research Center', True, 'black')
+          screen.blit(img, (200,100))
+          if recipe in self.researches:
+            self.research[z] = pygame.draw.rect(screen, 'sky blue', (100, 150 + f * 50, 600, 50 * math.ceil(len(self.research_costs[z]) / 3) - 10))
+          img = text_font.render(self.researches[z], True, 'black')
+          screen.blit(img, (100,150 + 50 * f))
+          for d in range(len(self.research_costs[z])):
+            h = d
+            img = text_font.render(self.research_costs[z][d][0], True, 'black')
+            if 400 + 100 * d > 699:
+              h = 0
+              f += 1
+              self.y += 1
+            screen.blit(img, (410 + 100 * h, 155 + 50 * f))
+            screen.blit(pygame.image.load(self.research_costs[z][d][1]), (460 + 100 * h,155 + 50 * f))
+      else:
+        self.type.append(tiles.colours[self.buildings[i][0]][self.buildings[i][1]][0])
+      x, y = pygame.mouse.get_pos()
+      if [self.x1, self.y1] != [x, y] and self.space == True:
+        self.space = False
+      self.x1 = x
+      self.y1 = y
+      if self.research[z].collidepoint(x, y) and recipe in self.researches and self.type[i] == 'research center' and imp[0][0] > imp[1][0] - 1 and tiles.click > 8 and event.type == pygame.MOUSEBUTTONDOWN:
         tiles.click = 0
         self.reset = False
         self.research.remove(self.research[z])
@@ -886,24 +994,32 @@ class buildings:
           self.research_costs.append(out[2][d])
         for d in range(len(out[3])):
           Ui.buildings.append(out[3][d])
+          Ui.all_buildings.append(out[3][d])
           if out[3][d] == 'molder':
+            Ui.Building_Images.append(Ui.Molder)
             Ui.molder[2] = True 
           if out[3][d] == 'pipe':
+            Ui.Building_Images.append(Ui.Pipe)
             Ui.pipe[2] = True
           if out[3][d] == 'smelter':
+            Ui.Building_Images.append(Ui.Smelter)
             Ui.smelter[2] = True
+    return_line = []
+    for i in range(len(imp[0])):
+      return_line.append(imp[0][i])
     screen.blit(Ui.Exit, (660, 110))
-    return [imp, out]
+    return(return_line)
   
   def automated_machines(self, i, type, recipe, imp, out, back):
-    self.imp = imp
-    self.out = out
     self.t = self.machines.index(type)
     text_font = pygame.font.SysFont("Ariel", 60)
     z = self.machines_recipes[self.t].index(recipe)
     if len(self.type) > i:
       self.type[i] = tiles.colours[self.buildings[i][0]][self.buildings[i][1]][0]
       if self.type[i] == type and self.machines_recipe[i] == 0:
+        self.imp = imp
+        self.out = out
+        self.rescources[i][1][0] = self.pipe_locs[2][self.pipe_locs[0].index(self.rescources[i][2])]
         if back == True:
           self.ui = pygame.draw.rect(screen, 'white', (100, 100, 600, 600))
           self.z_offset = 0
@@ -950,7 +1066,10 @@ class buildings:
         self.machines_rec[z][0] = pygame.draw.rect(screen, 'sky blue', (100, 150 + 50 * self.z_offsetting , 600, 40 + self.offset_reset * 50))
         self.machines_rec[z][1] = type
         for length in range(len(self.machines_recipes[self.t][z][0])):
-          img = text_font.render((str(inv.items[imp[length][0]]) + '|' + str(self.machines_recipes[self.t][z][0][length][0])), True, 'black')
+          if imp[length][0] not in self.liquids[0]:
+            img = text_font.render((str(inv.items[imp[length][0]]) + '|' + str(self.machines_recipes[self.t][z][0][length][0])), True, 'black')
+          else:
+            img = text_font.render((str(self.machines_recipes[self.t][z][0][length][0]) + 'L'), True, 'black')
           [x, y] = img.get_size()
           if x + self.total_lengths > 580:
             self.total_lengths = 0
@@ -972,7 +1091,10 @@ class buildings:
           self.z_offset += 1
         screen.blit(img, (110 + self.total_lengths,145 + 50 * self.z_offsetting))
         self.total_lengths += 70
-        img = text_font.render((str(inv.items[out[0]]) + '|' + str(self.machines_recipes[self.t][z][0][length][0])), True, 'black')
+        if out[0] in self.liquids[0]:
+          img = text_font.render((str(self.machines_recipes[self.t][z][0][length][0]) + 'L'), True, 'black')
+        else:
+          img = text_font.render((str(inv.items[out[0]]) + '|' + str(self.machines_recipes[self.t][z][0][length][0])), True, 'black')
         [x, y] = img.get_size()
         if x + self.total_lengths > 580:
           self.total_lengths = 0
@@ -1010,10 +1132,16 @@ class buildings:
       img = text_font.render(self.type[i], True, 'black')
       screen.blit(img, (300,100))
       for length in range(len(self.machines_recipes[self.t][z][0])):
-        img = text_font.render(str(self.machines_recipes[self.t][z][0][length][0]), True, 'black')
-        screen.blit(img, (200 - img.get_size()[0], (385 - (length + 1) * 15) + (length + 1) * 30))
-        img = text_font.render(str(self.rescources[i][0][length][0]), True, 'black')
-        screen.blit(img, (200, (485 - (length + 1) * 15) + (length + 1) * 30))
+        if imp[0][0] not in self.liquids[0]:
+          img = text_font.render(str(self.machines_recipes[self.t][z][0][length][0]), True, 'black')
+          screen.blit(img, (200 - img.get_size()[0], (385 - (length + 1) * 15) + (length + 1) * 30))
+          img = text_font.render(str(self.rescources[i][0][length][0]), True, 'black')
+          screen.blit(img, (200, (485 - (length + 1) * 15) + (length + 1) * 30))
+        else:
+          img = text_font.render(str(self.machines_recipes[self.t][z][0][length][0]) + 'L', True, 'black')
+          screen.blit(img, (200 - img.get_size()[0], (385 - (length + 1) * 15) + (length + 1) * 30))
+          img = text_font.render(str(round(self.rescources[i][0][length][0], 2)) + 'L', True, 'black')
+          screen.blit(img, (200, (485 - (length + 1) * 15) + (length + 1) * 30))
         screen.blit(pygame.transform.scale(pygame.image.load(self.machines_recipes[self.t][z][0][length][1]), (80, 80)), (200, (385 - (length + 1) * 15) + (length + 1) * 30))
         if self.machines_recipes[self.t][z][0][length][2] == True:
           text_font = pygame.font.SysFont("Ariel", 60)
@@ -1024,10 +1152,16 @@ class buildings:
           self.input[1] = pygame.draw.rect(screen, 'orange', (300, (425 - (length + 1) * 15) + (length + 1) * 30, 30, 30))
           screen.blit(img, (307, (425 - (length + 1) * 15) + (length + 1) * 30 - 7))
       text_font = pygame.font.SysFont("Ariel", 120)
-      img = text_font.render(str(self.machines_recipes[self.t][z][1][0]), True, 'black')
-      screen.blit(img, (550 - img.get_size()[0], 400))
-      img = text_font.render(str(self.rescources[i][1][0]), True, 'black')
-      screen.blit(img, (520, 500))
+      if out[0] in self.liquids[0]:
+        img = text_font.render(str(self.machines_recipes[self.t][z][1][0]) + 'L', True, 'black')
+        screen.blit(img, (550 - img.get_size()[0], 400))
+        img = text_font.render(str(round(self.rescources[i][1][0], 2)) + 'l', True, 'black')
+        screen.blit(img, (520, 500))
+      else:
+        img = text_font.render(str(self.machines_recipes[self.t][z][1][0]), True, 'black')
+        screen.blit(img, (550 - img.get_size()[0], 400))
+        img = text_font.render(str(self.rescources[i][1][0]), True, 'black')
+        screen.blit(img, (520, 500))
       screen.blit(pygame.transform.scale(pygame.image.load(self.machines_recipes[self.t][z][1][1]), (80, 80)), (550, 400))
       if self.machines_recipes[self.t][z][1][2] == True:
         text_font = pygame.font.SysFont("Ariel", 69)
@@ -1052,13 +1186,57 @@ class buildings:
         img = text_font.render(self.input[5] + '|' + self.machines_recipes[self.t][z][0][0][0], True, 'black')
         screen.blit(img, (350, 410))
     screen.blit(Ui.Exit, (660, 110))
+
+  def pipe(self, i):
+    text_font = pygame.font.SysFont("Ariel", 110)
+    self.max_capacity = 600
+    if len(self.type) > i:
+      if self.type[i] == 'pipe':
+        self.amount = self.pipe_locs[2][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])]
+        self.ui = pygame.draw.rect(screen, 'white', (100, 100, 600, 600))
+        img = text_font.render(('pipe'), True, 'black')
+        screen.blit(img, (300, 110))
+        pygame.draw.circle(screen, self.liquids[1][self.liquids[0].index(self.pipe_locs[3][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])])], (550, 400), 100)
+        print(self.liquids[1][self.liquids[0].index(self.pipe_locs[3][self.pipe_locs[0].index(self.buildings[i])])])
+        pygame.draw.rect(screen, 'white', (450, 300 , 200, 200 - (self.amount/self.max_capacity) * 200))
+        pygame.draw.circle(screen, 'black', (550, 400), 110, 10)
+        img = text_font.render(str(round(self.amount, 2)) + 'L', True, 'black')
+        screen.blit(img, (150, 300))
+        pygame.draw.line(screen, 'black', (150, 385), (430, 385), 20)
+        img = text_font.render(str(self.max_capacity) + 'L', True, 'black')
+        screen.blit(img, (150, 400))
+      for h in range(len(self.pipe_locs[1])):
+        for b in range(len(self.pipe_locs[1][h])):
+          self.new_pipe_loc = [self.pipe_locs[0][h][0] + self.pipe_locs[1][h][b][0], self.pipe_locs[0][h][1] + self.pipe_locs[1][h][b][1]]
+          if self.new_pipe_loc in self.pipe_locs[0]:
+            self.new_pipe = self.pipe_locs[0].index(self.new_pipe_loc)
+            if [0 - self.pipe_locs[1][h][b][0], 0 - self.pipe_locs[1][h][b][1]] in self.pipe_locs[1][self.new_pipe]:
+              if self.pipe_locs[2][self.new_pipe] > self.pipe_locs[2][h] and (self.pipe_locs[3][self.new_pipe] == self.pipe_locs[3][h] or self.pipe_locs[3][h] == ''):
+                self.transfer = 0.05 * (self.pipe_locs[2][self.new_pipe] - self.pipe_locs[2][h])
+                self.pipe_locs[2][self.new_pipe] -= self.transfer
+                self.pipe_locs[2][h] += self.transfer
+              if self.pipe_locs[3][h] == '':
+                self.pipe_locs[3][h] = self.pipe_locs[3][self.new_pipe]
+    else:
+      self.type.append(tiles.colours[self.buildings[i][0]][self.buildings[i][1]][0])
+    screen.blit(Ui.Exit, (660, 110))
   
   def automation(self):
     for i in range(len(self.type)):
       if (self.type[i] == 'smelter' or self.type[i] == 'molder') and Buildings.machines_recipe[i] != 0:
+        if self.rescources[i][1][1] in self.liquids[0]:
+          self.rescources[i][1][0] = self.pipe_locs[2][self.pipe_locs[0].index(self.rescources[i][2])]
+        elif self.rescources[i][0][0][1] in self.liquids[0]:
+          self.rescources[i][0][0][0] = self.pipe_locs[2][self.pipe_locs[0].index(self.rescources[i][2])]
         if self.rescources[i][0][0][0] >= self.rescources[i][0][0][2] and self.time % self.rescources[i][0][0][3] == 0:
           self.rescources[i][0][0][0] -= self.rescources[i][0][0][2]
           self.rescources[i][1][0] += self.rescources[i][1][2]
+        if self.rescources[i][1][1] in self.liquids[0]:
+          self.pipe_locs[2][self.pipe_locs[0].index(self.rescources[i][2])] = self.rescources[i][1][0]
+          self.pipe_locs[3][self.pipe_locs[0].index(self.rescources[i][2])] = self.rescources[i][1][1]
+        elif self.rescources[i][0][0][1] in self.liquids[0]:
+          self.pipe_locs[2][self.pipe_locs[0].index(self.rescources[i][2])] = self.rescources[i][1][0]
+          self.pipe_locs[3][self.pipe_locs[0].index(self.rescources[i][2])] = self.rescources[i][0][0][1]
 
 screen = pygame.display.set_mode((800 , 800))
 
@@ -1086,7 +1264,7 @@ while True:
           elif Buildings.input[4] == 1 and int(Buildings.input[5]) < Buildings.rescources[Buildings.i][0][0][0] + 1:
             inv.items[Buildings.imp[0][0]] += int(Buildings.input[5])
             Buildings.rescources[Buildings.i][0][0][0] -= int(Buildings.input[5])
-          elif Buildings.input[4] == 2 and int(Buildings.input[5]) < inv.items[Buildings.imp[0][0]] + 1:
+          elif Buildings.input[4] == 2 and int(Buildings.input[5]) < inv.items[Buildings.out[0]] + 1:
             inv.items[Buildings.out[0]] -= int(Buildings.input[5])
             Buildings.rescources[Buildings.i][1][0] += int(Buildings.input[5])
           elif Buildings.input[4] == 3 and int(Buildings.input[5]) < Buildings.rescources[Buildings.i][1][0] + 1:
@@ -1110,6 +1288,8 @@ while True:
         Ui.e_key = True
       if event.key == pygame.K_SPACE:
         Buildings.space1 = True
+      if event.key == pygame.K_RETURN:
+        Ui.space = True
     if event.type == pygame.KEYUP:
       if event.key == pygame.K_UP:
         key_up = False
@@ -1125,14 +1305,18 @@ while True:
         Ui.e_key = False
       if event.key == pygame.K_SPACE:
         Buildings.space1 = False
+      if event.key == pygame.K_RETURN:
+        Ui.space = False
     if event.type == pygame.MOUSEBUTTONUP:
       Buildings.mouse_button = False
       x, y = pygame.mouse.get_pos()
       if Main_game == False and Home_page == True and home_screen.create_new_game.collidepoint(x, y) and Load == False:
           Main_game = True
           tiles.done_pt2 = False
-      elif Main_game == False and (home_screen.quit.collidepoint(x, y) or Ui.Quit.collidepoint(x,y)) and Load == False and Save == False:
-          pygame.quit()
+      elif Main_game == False and Home_page == True and home_screen.quit.collidepoint(x, y) and Load == False and Save == False:
+        pygame.quit()
+      elif Main_game == False and Ui.Quit.collidepoint(x, y) and Load == False and Save == False:
+        pygame.quit()
       elif Main_game == True and Ui.options_hitbox.collidepoint(x,y):
           Main_game = False
           Home_page = False
@@ -1151,7 +1335,7 @@ while True:
           Ui.selection = False
           Ui.Save = 4
           time.sleep(0.5)
-      elif Main_game == False and Home_page == False and Ui.Main_Menu.collidepoint(x,y) and Load == False:
+      elif Main_game == False and Home_page == False and Ui.Main_Menu.collidepoint(x,y) and Load == False and Save == False:
         Home_page = True
         turn = 0
         tiles.__init__()
@@ -1253,85 +1437,33 @@ while True:
       [inv.items[9], inv.items[5]] = Ui.Placement_system([3, [['10', 'images - Current Version\Copper Sheet.png'], ['6', 'images - Current Version\Iron Rod.png']], 'smelter', [Ui.smelter, Ui.Smelter], [False, [[inv.items[9], 10, 9], [inv.items[5], 6, 5]]]])
       [inv.items[9]] = Ui.Placement_system([4, [['5', 'images - Current Version\Copper Sheet.png']], 'pipe', [Ui.pipe, Ui.Pipe], [False, [[inv.items[9], 5, 9]]]])
     if Buildings.i != -1:
-      output = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Inv Iron Ore.png']], ['1','images - Current Version\Iron Ingot.png']],  [[inv.items[1], 1, 1]], [inv.items[4], 1, 4], True)
-      inv.items[1] = output[0][0][0]
-      inv.items[4] = output[1][0]
+      inv.items[1], inv.items[4] = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Inv Iron Ore.png']], ['1','images - Current Version\Iron Ingot.png']],  [[inv.items[1], 1, 1]], [inv.items[4], 1, 4], True)
       if py72 == 'Hammer':
-        output = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Inv Wood.png'], ['1','images - Current Version\Iron Rod.png']], ['1','images - Current Version\Hammer.png']],  [[inv.items[0], 1], [inv.items[5], 2]], [inv.items[12], 1], False)
-        inv.items[0] = output[0][0][0]
-        inv.items[5] = output[0][1][0]
-        inv.items[12] = output[1][0]
-      if [[['1','images - Current Version\Iron Ingot.png']], ['1','images - Current Version\Iron Rod.png']] in Buildings.construction_bench_recipes:
-        output = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Iron Ingot.png']], ['1', 'images - Current Version\Iron Rod.png']],  [[inv.items[4], 1]], [inv.items[5], 1], False)
-        inv.items[4] = output[0][0][0]
-        inv.items[5] = output[1][0]
-      if [[['1','images - Current Version\Iron Ingot.png']], ['1','images - Current Version\Iron Plate.png']] in Buildings.construction_bench_recipes:
-        output = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Iron Ingot.png']], ['1','images - Current Version\Iron Plate.png']], [[inv.items[4], 1]], [inv.items[6], 1], False)
-        inv.items[4] = output[0][0][0]
-        inv.items[6] = output[1][0]
-      if [[['1','images - Current Version\Inv Copper Ore.png']], ['1','images - Current Version\Copper Ingot.png']] in Buildings.construction_bench_recipes:
-        output = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Inv Copper Ore.png']], ['1','images - Current Version\Copper Ingot.png']], [[inv.items[2], 1]], [inv.items[7], 1], False)
-        inv.items[2] = output[0][0][0]
-        inv.items[7] = output[1][0]
-      if [[['1','images - Current Version\Copper Ingot.png']], ['1','images - Current Version\Wire.png']] in Buildings.construction_bench_recipes:
-        output = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Copper Ingot.png']], ['1','images - Current Version\Wire.png']],  [[inv.items[7], 1]], [inv.items[8], 1], False)
-        inv.items[7] = output[0][0][0]
-        inv.items[8] = output[1][0]
-      if [[['1','images - Current Version\Copper Ingot.png']], ['1','images - Current Version\Copper Sheet.png']] in Buildings.construction_bench_recipes:
-        output = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Copper Ingot.png']], ['1','images - Current Version\Copper Sheet.png']],  [[inv.items[7], 1]], [inv.items[9], 1], False)
-        inv.items[7] = output[0][0][0]
-        inv.items[9] = output[1][0]
-      if [[['5','images - Current Version\Iron Rod.png'], ['5','images - Current Version\Iron Plate.png'], ['5','images - Current Version\Wire.png']], ['1','images - Current Version\Rotor.png']] in Buildings.construction_bench_recipes:
-        output = Buildings.Constuction_table(Buildings.i, [[['5','images - Current Version\Iron Rod.png'], ['5','images - Current Version\Iron Plate.png'], ['5','images - Current Version\Wire.png']], ['1', 'images - Current Version\Rotor.png']],  [[inv.items[5], 5], [inv.items[6], 5], [inv.items[8], 5]], [inv.items[10], 1], False)
-        inv.items[5] = output[0][0][0]
-        inv.items[6] = output[0][1][0]
-        inv.items[8] = output[0][2][0] 
-        inv.items[10] = output[1][0]
-      if [[['12','images - Current Version\Iron Rod.png'], ['6','images - Current Version\Iron Plate.png']], ['1','images - Current Version\Iron Crate.png']] in Buildings.construction_bench_recipes:
-        output = Buildings.Constuction_table(Buildings.i, [[['12','images - Current Version\Iron Rod.png'], ['6','images - Current Version\Iron Plate.png']], ['1','images - Current Version\Iron Crate.png']],  [[inv.items[5], 12], [inv.items[6], 6]], [inv.items[11], 1], False)
-        inv.items[5] = output[0][0][0]
-        inv.items[6] = output[0][1][0]
-        inv.items[11] = output[1][0]
-      if 'iron basics' in Buildings.researches:
-        output = Buildings.Research_center(Buildings.i, 'iron basics', [[inv.items[4]], [20]], [[[[['1','images - Current Version\Iron Ingot.png']], ['1','images - Current Version\Iron Rod.png']], [[['1','images - Current Version\Iron Ingot.png']], ['1','images - Current Version\Iron Plate.png']]], ['copper basics', 'molders'], [[['30','images - Current Version\Iron Rod.png'], ['30','images - Current Version\Iron Plate.png']], [['50','images - Current Version\Iron Rod.png'], ['50','images - Current Version\Iron Plate.png']]], []], True)
-        inv.items[4] = output[0][0][0]
-      if 'copper basics' in Buildings.researches:
-        output = Buildings.Research_center(Buildings.i, 'copper basics', [[inv.items[5], inv.items[6]] , [30, 30]], [[[[['1','images - Current Version\Inv Copper Ore.png']], ['1','images - Current Version\Copper Ingot.png']], [[['1','images - Current Version\Copper Ingot.png']], ['1','images - Current Version\Wire.png']], [[['1','images - Current Version\Copper Ingot.png']], ['1','images - Current Version\Copper Sheet.png']]], ['manufacturing', 'smelters', 'pipes'], [[['30','images - Current Version\Iron Rod.png'], ['30','images - Current Version\Iron Plate.png'], ['30','images - Current Version\Wire.png'], ['30','images - Current Version\Copper Sheet.png']], [['30','images - Current Version\Iron Rod.png'], ['30','images - Current Version\Iron Plate.png'], ['30','images - Current Version\Copper Sheet.png']], [['50','images - Current Version\Copper Sheet.png']]], []], True)
-        inv.items[5] = output[0][0][0]
-        inv.items[6] = output[0][0][1]
-      if 'molders' in Buildings.researches:
-        if 'copper basics' in Buildings.researches:
-          output = Buildings.Research_center(Buildings.i, 'molders', [[inv.items[5], inv.items[6]] , [50, 50]], [[], [], [], ['molder']], False)
-        else:
-          output = Buildings.Research_center(Buildings.i, 'molders', [[inv.items[5], inv.items[6]] , [50, 50]], [[], [], [], ['molder']], True)
-        inv.items[5] = output[0][0][0]
-        inv.items[6] = output[0][0][1]
-      if 'manufacturing' in Buildings.researches:
-        if 'molders' in Buildings.researches:
-          output = Buildings.Research_center(Buildings.i, 'manufacturing', [[inv.items[5], inv.items[6], inv.items[8], inv.items[9]] , [30, 30, 30, 30]], [[[[['5','images - Current Version\Iron Rod.png'], ['5','images - Current Version\Iron Plate.png'], ['5','images - Current Version\Wire.png']], ['1','images - Current Version\Rotor.png']], [[['12','images - Current Version\Iron Rod.png'], ['6','images - Current Version\Iron Plate.png']], ['1','images - Current Version\Iron Crate.png']]], [], [], []], False)
-        else:
-          output = Buildings.Research_center(Buildings.i, 'manufacturing', [[inv.items[5], inv.items[6], inv.items[8], inv.items[9]] , [30, 30, 30, 30]], [[[[['5','images - Current Version\Iron Rod.png'], ['5','images - Current Version\Iron Plate.png'], ['5','images - Current Version\Wire.png']], ['1','images - Current Version\Rotor.png']], [[['12','images - Current Version\Iron Rod.png'], ['6','images - Current Version\Iron Plate.png']], ['1','images - Current Version\Iron Crate.png']]], [], [], []], True)
-      if 'smelters' in Buildings.researches:
-        if 'manufacturing' or 'molders' in Buildings.researches:
-          output = Buildings.Research_center(Buildings.i, 'smelters', [[inv.items[5], inv.items[6], inv.items[9]] , [30, 30, 30]], [[], [], [], ['smelter']], False)
-        else:
-          output = Buildings.Research_center(Buildings.i, 'smelters', [[inv.items[5], inv.items[6], inv.items[9]] , [30, 30, 30]], [[], [], [], ['smelter']], True)
-        inv.items[5] = output[0][0][0]
-        inv.items[6] = output[0][0][1]
-        inv.items[9] = output[0][0][2]
-      if 'pipes' in Buildings.researches:
-        if 'manufacturing' or 'molders' or 'smelters' in Buildings.researches:
-          output = Buildings.Research_center(Buildings.i, 'pipes', [[inv.items[5], inv.items[6], inv.items[9]] , [30, 30, 30]], [[], [], [], ['pipe']], False)
-        else:
-          output = Buildings.Research_center(Buildings.i, 'pipes', [[inv.items[5], inv.items[6], inv.items[9]] , [30, 30, 30]], [[], [], [], ['pipe']], True)
-        inv.items[5] = output[0][0][0]
-        inv.items[6] = output[0][0][1]
-        inv.items[9] = output[0][0][2]
-      Buildings.automated_machines(Buildings.i, 'smelter', [[['1','images - Current Version\Inv Iron Ore.png', True]], ['1','images - Current Version\Iron Liquid.png', False]],  [[1, 1]], [12, 1, 64], True)
-      Buildings.automated_machines(Buildings.i, 'smelter', [[['1','images - Current Version\Inv Copper Ore.png', True]], ['1','images - Current Version\Copper Liquid.png', False]],  [[2, 1]], [12, 1, 64], False)
-      Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'images - Current Version\Iron Liquid.png', False]], ['1',  'images - Current Version\Iron Ingot.png', True]],  [[1, 1]], [12, 1, 64], True)
-      Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'images - Current Version\Copper Liquid.png', False]], ['1',  'images - Current Version\Copper Ingot.png', True]],  [[1, 1]], [12, 1, 64], False)
+        inv.items[0], inv.items[5], inv.items[12] = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Inv Wood.png'], ['1','images - Current Version\Iron Rod.png']], ['1','images - Current Version\Hammer.png']],  [[inv.items[0], 1], [inv.items[5], 2]], [inv.items[12], 1], False)
+      # inputs, output = (buildings.i, [[[amount 1, image 1], [amount 2, image 2]], [output amount, output image]], [[input: inv.items[?], amount], [input: inv.items[?], amount]], [output: inv.items[?], amount], False)
+      inv.items[4], inv.items[5] = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Iron Ingot.png']], ['1', 'images - Current Version\Iron Rod.png']],  [[inv.items[4], 1]], [inv.items[5], 1], False)
+      inv.items[4], inv.items[6] = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Iron Ingot.png']], ['1','images - Current Version\Iron Plate.png']], [[inv.items[4], 1]], [inv.items[6], 1], False)
+      inv.items[2], inv.items[7] = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Inv Copper Ore.png']], ['1','images - Current Version\Copper Ingot.png']], [[inv.items[2], 1]], [inv.items[7], 1], False)
+      inv.items[7], inv.items[8] = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Copper Ingot.png']], ['1','images - Current Version\Wire.png']],  [[inv.items[7], 1]], [inv.items[8], 1], False)
+      inv.items[7], inv.items[9] = Buildings.Constuction_table(Buildings.i, [[['1','images - Current Version\Copper Ingot.png']], ['1','images - Current Version\Copper Sheet.png']],  [[inv.items[7], 1]], [inv.items[9], 1], False)
+      inv.items[5], inv.items[6], inv.items[8], inv.items[10] = Buildings.Constuction_table(Buildings.i, [[['5','images - Current Version\Iron Rod.png'], ['5','images - Current Version\Iron Plate.png'], ['5','images - Current Version\Wire.png']], ['1', 'images - Current Version\Rotor.png']],  [[inv.items[5], 5], [inv.items[6], 5], [inv.items[8], 5]], [inv.items[10], 1], False)
+      inv.items[5], inv.items[6], inv.items[11] = Buildings.Constuction_table(Buildings.i, [[['12','images - Current Version\Iron Rod.png'], ['6','images - Current Version\Iron Plate.png']], ['1','images - Current Version\Iron Crate.png']],  [[inv.items[5], 12], [inv.items[6], 6]], [inv.items[11], 1], False)
+      # inputs, output = (buildings.i, 'name', [[inv.items[?], inv.items[?]], [amount, amount]], [[constuction bench new recipes], [new research names], [new research recipes], [new machine names]]
+      [inv.items[4]] = Buildings.Research_center(Buildings.i, 'iron basics', [[inv.items[4]], [20]], [[[[['1','images - Current Version\Iron Ingot.png']], ['1','images - Current Version\Iron Rod.png']], [[['1','images - Current Version\Iron Ingot.png']], ['1','images - Current Version\Iron Plate.png']]], ['copper basics', 'molders'], [[['30','images - Current Version\Iron Rod.png'], ['30','images - Current Version\Iron Plate.png']], [['50','images - Current Version\Iron Rod.png'], ['50','images - Current Version\Iron Plate.png']]], []])
+      inv.items[5], inv.items[6] = Buildings.Research_center(Buildings.i, 'copper basics', [[inv.items[5], inv.items[6]] , [30, 30]], [[[[['1','images - Current Version\Inv Copper Ore.png']], ['1','images - Current Version\Copper Ingot.png']], [[['1','images - Current Version\Copper Ingot.png']], ['1','images - Current Version\Wire.png']], [[['1','images - Current Version\Copper Ingot.png']], ['1','images - Current Version\Copper Sheet.png']]], ['manufacturing', 'smelters', 'pipes'], [[['30','images - Current Version\Iron Rod.png'], ['30','images - Current Version\Iron Plate.png'], ['30','images - Current Version\Wire.png'], ['30','images - Current Version\Copper Sheet.png']], [['30','images - Current Version\Iron Rod.png'], ['30','images - Current Version\Iron Plate.png'], ['30','images - Current Version\Copper Sheet.png']], [['50','images - Current Version\Copper Sheet.png']]], []])
+      inv.items[5], inv.items[6] = Buildings.Research_center(Buildings.i, 'molders', [[inv.items[5], inv.items[6]] , [50, 50]], [[], [], [], ['molder']])
+      inv.items[5], inv.items[6], inv.items[8], inv.items[9] = Buildings.Research_center(Buildings.i, 'manufacturing', [[inv.items[5], inv.items[6], inv.items[8], inv.items[9]] , [30, 30, 30, 30]], [[[[['5','images - Current Version\Iron Rod.png'], ['5','images - Current Version\Iron Plate.png'], ['5','images - Current Version\Wire.png']], ['1','images - Current Version\Rotor.png']], [[['12','images - Current Version\Iron Rod.png'], ['6','images - Current Version\Iron Plate.png']], ['1','images - Current Version\Iron Crate.png']]], [], [], []])
+      inv.items[5], inv.items[6], inv.items[9] = Buildings.Research_center(Buildings.i, 'smelters', [[inv.items[5], inv.items[6], inv.items[9]] , [30, 30, 30]], [[], [], [], ['smelter']])
+      [inv.items[9]] = Buildings.Research_center(Buildings.i, 'pipes', [[inv.items[9]] , [80]], [[], [], [], ['pipe']])
+      #(buildings.i, machine, [[[input amount, input recipe, pickupable]], [output amount, output recipe, pickupable]], [[]])
+      Buildings.automated_machines(Buildings.i, 'smelter', [[['1','images - Current Version\Inv Iron Ore.png', True]], ['1','images - Current Version\Iron Liquid.png', False]],  [[1, 1]], ['iron liquid', 1, 64], True)
+      Buildings.automated_machines(Buildings.i, 'smelter', [[['1','images - Current Version\Inv Copper Ore.png', True]], ['1','images - Current Version\Copper Liquid.png', False]],  [[2, 1]], ['copper liquid', 1, 64], False)
+      Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'images - Current Version\Iron Liquid.png', False]], ['1',  'images - Current Version\Iron Ingot.png', True]],  [['iron liquid', 1]], [4, 1, 64], True)
+      Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'images - Current Version\Copper Liquid.png', False]], ['1',  'images - Current Version\Copper Ingot.png', True]],  [['copper liquid', 1]], [5, 1, 64], False)
+      Buildings.pipe(Buildings.i)
     Buildings.automation()
+  elif py72 == 'Tutorial':
+    Ui.tutorial()
   else:
     if Home_page == True:
       Load == False
