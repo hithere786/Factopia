@@ -1128,6 +1128,12 @@ class buildings:
             self.machines_recipe[i] = 0
       if Ui.return_hitbox.collidepoint(x, y) and self.mouse_button == True:
         self.machines_recipe[i] = 0
+        if isinstance(self.rescources[i][1][1], int):
+          inv.items[self.rescources[i][1][1]] += self.rescources[i][1][0]
+        if isinstance(self.rescources[i][0][0][1], int):
+          inv.items[self.rescources[i][0][0][1]] += self.rescources[i][0][0][0]
+        self.rescources[i][1][0] = 0
+        self.rescources[i][0][0][0] = 0
       text_font = pygame.font.SysFont("Ariel", 120)
       img = text_font.render(self.type[i], True, 'black')
       screen.blit(img, (300,100))
@@ -1189,15 +1195,18 @@ class buildings:
 
   def pipe(self, i):
     text_font = pygame.font.SysFont("Ariel", 110)
+    small_font = pygame.font.SysFont("Ariel", 80)
     self.max_capacity = 600
     if len(self.type) > i:
       if self.type[i] == 'pipe':
         self.amount = self.pipe_locs[2][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])]
         self.ui = pygame.draw.rect(screen, 'white', (100, 100, 600, 600))
-        img = text_font.render(('pipe'), True, 'black')
+        img = text_font.render('pipe', True, 'black')
         screen.blit(img, (300, 110))
+        img = small_font.render('Flush', True, 'black')
+        screen.blit(img, (320, 580))
         pygame.draw.circle(screen, self.liquids[1][self.liquids[0].index(self.pipe_locs[3][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])])], (550, 400), 100)
-        print(self.liquids[1][self.liquids[0].index(self.pipe_locs[3][self.pipe_locs[0].index(self.buildings[i])])])
+        self.flush = pygame.draw.circle(screen, 'black', (550, 600), 40)
         pygame.draw.rect(screen, 'white', (450, 300 , 200, 200 - (self.amount/self.max_capacity) * 200))
         pygame.draw.circle(screen, 'black', (550, 400), 110, 10)
         img = text_font.render(str(round(self.amount, 2)) + 'L', True, 'black')
@@ -1205,6 +1214,49 @@ class buildings:
         pygame.draw.line(screen, 'black', (150, 385), (430, 385), 20)
         img = text_font.render(str(self.max_capacity) + 'L', True, 'black')
         screen.blit(img, (150, 400))
+        x, y = pygame.mouse.get_pos()
+        if self.flush.collidepoint(x, y) and self.mouse_button == True:
+          while round(self.pipe_locs[2][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])], 3) != 0:
+            if self.pipe_locs[2][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])] < 1:
+              self.pipe_locs[2][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])] -= 0.001
+            elif self.pipe_locs[2][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])] < 5:
+              self.pipe_locs[2][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])] -= 0.01
+            elif self.pipe_locs[2][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])] < 20:
+              self.pipe_locs[2][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])] -= 0.1
+            elif self.pipe_locs[2][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])] < 80:
+              self.pipe_locs[2][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])] -= 1
+            else:
+              self.pipe_locs[2][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])] -= 10
+            for h in range(len(self.pipe_locs[1])):
+              for b in range(len(self.pipe_locs[1][h])):
+                self.new_pipe_loc = [self.pipe_locs[0][h][0] + self.pipe_locs[1][h][b][0], self.pipe_locs[0][h][1] + self.pipe_locs[1][h][b][1]]
+                if self.new_pipe_loc in self.pipe_locs[0]:
+                  self.new_pipe = self.pipe_locs[0].index(self.new_pipe_loc)
+                  if [0 - self.pipe_locs[1][h][b][0], 0 - self.pipe_locs[1][h][b][1]] in self.pipe_locs[1][self.new_pipe]:
+                    if self.pipe_locs[2][self.new_pipe] > self.pipe_locs[2][h] and (self.pipe_locs[3][self.new_pipe] == self.pipe_locs[3][h] or self.pipe_locs[3][h] == ''):
+                      self.transfer = 0.05 * (self.pipe_locs[2][self.new_pipe] - self.pipe_locs[2][h])
+                      self.pipe_locs[2][self.new_pipe] -= self.transfer
+                      self.pipe_locs[2][h] += self.transfer
+                    if self.pipe_locs[3][h] == '':
+                      self.pipe_locs[3][h] = self.pipe_locs[3][self.new_pipe]
+            self.amount = self.pipe_locs[2][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])]
+            self.ui = pygame.draw.rect(screen, 'white', (100, 100, 600, 600))
+            img = text_font.render('pipe', True, 'black')
+            screen.blit(img, (300, 110))
+            img = small_font.render('Flush', True, 'black')
+            screen.blit(img, (320, 580))
+            pygame.draw.circle(screen, self.liquids[1][self.liquids[0].index(self.pipe_locs[3][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])])], (550, 400), 100)
+            self.flush = pygame.draw.circle(screen, 'black', (550, 600), 40)
+            pygame.draw.rect(screen, 'white', (450, 300 , 200, 200 - (self.amount/self.max_capacity) * 200))
+            pygame.draw.circle(screen, 'black', (550, 400), 110, 10)
+            img = text_font.render(str(round(self.amount, 2)) + 'L', True, 'black')
+            screen.blit(img, (150, 300))
+            pygame.draw.line(screen, 'black', (150, 385), (430, 385), 20)
+            img = text_font.render(str(self.max_capacity) + 'L', True, 'black')
+            screen.blit(img, (150, 400))
+            screen.blit(Ui.Exit, (660, 110))
+            pygame.display.update()
+          self.pipe_locs[3][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])] = ''
       for h in range(len(self.pipe_locs[1])):
         for b in range(len(self.pipe_locs[1][h])):
           self.new_pipe_loc = [self.pipe_locs[0][h][0] + self.pipe_locs[1][h][b][0], self.pipe_locs[0][h][1] + self.pipe_locs[1][h][b][1]]
@@ -1237,6 +1289,9 @@ class buildings:
         elif self.rescources[i][0][0][1] in self.liquids[0]:
           self.pipe_locs[2][self.pipe_locs[0].index(self.rescources[i][2])] = self.rescources[i][1][0]
           self.pipe_locs[3][self.pipe_locs[0].index(self.rescources[i][2])] = self.rescources[i][0][0][1]
+      if self.machines_recipe[i] == 0 and (self.rescources[i][1][0] != 0 or self.rescources[i][0][0][1] != 0):
+        self.pipe_locs[2][self.pipe_locs[0].index(self.rescources[i][2])] = 0
+        self.pipe_locs[3][self.pipe_locs[0].index(self.rescources[i][2])] = 'unusable'
 
 screen = pygame.display.set_mode((800 , 800))
 
