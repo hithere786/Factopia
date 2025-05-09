@@ -34,7 +34,6 @@ if initiate == True:
   Save = False
   Load = False
   ready = True
-  build_menu = False
 
 class camera:
   def __init__(self):
@@ -314,7 +313,7 @@ class map_tiles:
           mouse = pygame.mouse.get_pos()
           if event.type == pygame.MOUSEBUTTONDOWN:
             if mouse[0] > x * 60 + self.x and mouse[0] < x * 60 + self.x + 60 and mouse[1] > y * 60 + self.y and mouse[1] < y * 60 + self.y + 60 and Buildings.i == -1:
-              if (self.colours[x + 100][y + 100] == 'Tree' or self.colours[x + 100][y + 100] == 'Tree1' or self.colours[x + 100][y + 100] == 'Tree2') and not (Ui.options_hitbox.colliderect(x * 60 + self.x,  y * 60 + self.y, 60, 60) or Ui.build_hitbox.colliderect(x * 60 + self.x,  y * 60 + self.y, 60, 60) or (Ui.build_hitbox.colliderect(x * 60 + self.x,  y * 60 + self.y, 60, 60) and Buildings.i != -1) or Ui.menu_bar.colliderect(x * 60 + self.x,  y * 60 + self.y, 60, 60)):
+              if (self.colours[x + 100][y + 100] == 'Tree' or self.colours[x + 100][y + 100] == 'Tree1' or self.colours[x + 100][y + 100] == 'Tree2') and not (Ui.options_hitbox.colliderect(x * 60 + self.x,  y * 60 + self.y, 60, 60) or Ui.build_hitbox.colliderect(x * 60 + self.x,  y * 60 + self.y, 60, 60) or (Ui.build_hitbox.colliderect(x * 60 + self.x,  y * 60 + self.y, 60, 60) and Buildings.i != -1) or (y * 60 + self.y > 600 and Ui.build_menu == True)):
                 self.animation_turn = 12
                 self.animation = [x, y]
                 self.animation_x = 0
@@ -327,7 +326,7 @@ class map_tiles:
                 if self.colours[x + 100][y + 100] == 'Coal':
                   inv.items[3] += 1
               for i in range(len(Ui.all_buildings)):
-                if self.colours[x + 100][y + 100][0] == Ui.all_buildings[i]:
+                if self.colours[x + 100][y + 100][0] == Ui.all_buildings[i] and not (Ui.options_hitbox.colliderect(x * 60 + self.x,  y * 60 + self.y, 60, 60) or Ui.build_hitbox.colliderect(x * 60 + self.x,  y * 60 + self.y, 60, 60) or (Ui.build_hitbox.colliderect(x * 60 + self.x,  y * 60 + self.y, 60, 60) and Buildings.i != -1) or (y * 60 + self.y > 600 and Ui.build_menu == True)):
                   Buildings.i = Buildings.buildings.index([x + 100, y + 100])
               
         y += 1
@@ -352,7 +351,7 @@ class loading_page:
     self.create_new_game = pygame.draw.rect(screen, (109, 209, 209), (0,130, 400, 120))
     self.load_game = pygame.draw.rect(screen, (109, 209, 209), (0,250, 350, 70))
     self.quit = pygame.draw.rect(screen, (109, 209, 209), (0,320, 400, 80))
-    screen.blit(pygame.image.load('images - Current Version/Beta 1.5 Main page.png'), (0,0))
+    screen.blit(pygame.image.load('images - Current Version/Beta 1.7 Home page.png'), (0,0))
 
 class ui:
   def __init__(self):
@@ -437,6 +436,7 @@ class ui:
     self.build_stats = [self.molder, self.construction, self.research_center, self.smelter, self.pipe]
     self.Building_Images = [self.Research_Center, self.Construction_Bench]
     self.selection = False
+    self.build_menu = False
     self.selections = False
     self.build_hitbox_y = 720
     self.Save = 0
@@ -832,7 +832,9 @@ class buildings:
     self.space1 = False
     self.machines = ['smelter', 'molder']
     self.machines_recipe = []
-    self.construction_bench_recipes = [[[['1','images - Current Version\Inv Iron Ore.png']], ['1',  'images - Current Version\Iron Ingot.png']],[[['1', 'images - Current Version\Inv Wood.png'], ['1', 'images - Current Version\Iron Rod.png']], ['1', 'images - Current Version\Hammer.png']]]
+    self.construction_bench_recipes = [[[['1','images - Current Version\Inv Iron Ore.png']], ['1',  'images - Current Version\Iron Ingot.png']]]
+    if py72 == 'Hammer':
+      self.construction_bench_recipes.append([[['1', 'images - Current Version\Inv Wood.png'], ['1', 'images - Current Version\Iron Rod.png']], ['1', 'images - Current Version\Hammer.png']])
     self.researches = ['iron basics']
     self.research_costs = [[['20',  'images - Current Version\Iron Ingot.png']]]
     self.machines_recipes = [[[[['1','images - Current Version\Inv Iron Ore.png', True]], ['1',  'images - Current Version\Iron Liquid.png', False]], [[['1', 'images - Current Version\Inv Copper Ore.png', True]], ['1', 'images - Current Version\Copper Liquid.png', False]]], [[[['1', 'images - Current Version\Iron Liquid.png', False]], ['1',  'images - Current Version\Iron Ingot.png', True]], [[['1', 'images - Current Version\Copper Liquid.png', False]], ['1',  'images - Current Version\Copper Ingot.png', True]]]]
@@ -1287,7 +1289,7 @@ class buildings:
           self.pipe_locs[2][self.pipe_locs[0].index(self.rescources[i][2])] = self.rescources[i][1][0]
           self.pipe_locs[3][self.pipe_locs[0].index(self.rescources[i][2])] = self.rescources[i][1][1]
         elif self.rescources[i][0][0][1] in self.liquids[0]:
-          self.pipe_locs[2][self.pipe_locs[0].index(self.rescources[i][2])] = self.rescources[i][1][0]
+          self.pipe_locs[2][self.pipe_locs[0].index(self.rescources[i][2])] = self.rescources[i][0][0][0]
           self.pipe_locs[3][self.pipe_locs[0].index(self.rescources[i][2])] = self.rescources[i][0][0][1]
       if self.machines_recipe[i] == 0 and (self.rescources[i][1][0] != 0 or self.rescources[i][0][0][1] != 0):
         self.pipe_locs[2][self.pipe_locs[0].index(self.rescources[i][2])] = 0
@@ -1428,10 +1430,10 @@ while True:
         else:
           Ui.selections = True
       if Ui.build_hitbox.collidepoint(x,y) and Main_game == True and Ui.build_hitbox_y == 720:
-        build_menu = True 
+        Ui.build_menu = True 
         Ui.build_hitbox_y = 520
       elif Ui.build_hitbox.collidepoint(x,y) and Main_game == True and Ui.build_hitbox_y == 520:
-        build_menu = False
+        Ui.build_menu = False
         Ui.build_hitbox_y = 720
       elif Ui.close_hitbox.collidepoint(x,y) and Main_game == True and Buildings.i != -1:
         Buildings.i = -1
@@ -1483,7 +1485,7 @@ while True:
       inv.UI('Rotor', 10)
       inv.UI('Iron Crate', 11)
       inv.UI('Hammer', 12)
-    if build_menu == True and Buildings.i == -1:
+    if Ui.build_menu == True and Buildings.i == -1:
       Ui.new_turn = True
       # [number, [['amount 1', 'amount image 1'], ['amount 2', 'amount image 2']], 'name', [Ui.lower_case_name, Ui.upper_case_name], [1 time use (True/False), [[inv.items[?], amount, ?], [inv.items[?], amount, ?]]]]
       [inv.items[5], inv.items[6]] = Ui.Placement_system([0, [['10', 'images - Current Version\Iron Rod.png'], ['10', 'images - Current Version\Iron Plate.png']], 'molder', [Ui.molder, Ui.Molder], [False, [[inv.items[5], 10, 5], [inv.items[6], 1, 6]]]])
