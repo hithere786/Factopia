@@ -1,3 +1,4 @@
+ 
 import pygame, time, random, json, math
 
 py72 = input('Run Game: ')
@@ -637,18 +638,30 @@ class ui:
               Buildings.belt_locs.append([[round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100], [False, False], belt_loc])
           else:
             tiles.colours[round(self.snap_mouse_location[0]) + 100][round(self.snap_mouse_location[1]) + 100] = [imp[2], self.direction]
+            Buildings.pipe_locs[0].append([round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100])
+            pipe_loc = []
+            for i in range(len(Buildings.pipe_types[0][self.type])):
+              pipe_loc.append(Buildings.pipe_types[0][3].index(Buildings.pipe_types[0][self.type][i]) + self.direction)
+              if pipe_loc[i] < 3:
+                pipe_loc[i] -= 4
+              pipe_loc[i] = Buildings.pipe_types[0][3][pipe_loc[i]]
+            Buildings.pipe_locs[1].append(pipe_loc)
+            Buildings.pipe_locs[2].append(0)
+            Buildings.pipe_locs[3].append('unusable')
             belt_loc = [[], []]
             for i in range(len(Buildings.belt_types[1][Buildings.building.index(imp[2])][0])):
               belt_loc[0].append(Buildings.belt_types[0][3][0].index(Buildings.belt_types[1][Buildings.building.index(imp[2])][0][i]) + self.direction)
               if belt_loc[0][i] > 3:
                 belt_loc[0][i] -= 4
-              belt_loc[0][i] = Buildings.belt_types[0][3][0][belt_loc[i]]
+              belt_loc[0][i] = Buildings.belt_types[0][3][0][belt_loc[0][i]]
             for i in range(len(Buildings.belt_types[1][Buildings.building.index(imp[2])][1])):
               belt_loc[1].append(Buildings.belt_types[0][3][1].index(Buildings.belt_types[1][Buildings.building.index(imp[2])][1][i]) + self.direction)
               if belt_loc[1][i] > 3:
                 belt_loc[1][i] -= 4
-              belt_loc[1][i] = Buildings.belt_types[0][3][1][belt_loc[i]]
-            Buildings.belt_locs.append([[round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100], [False, False], belt_loc])
+              belt_loc[1][i] = Buildings.belt_types[0][3][1][belt_loc[1][i]]
+            Buildings.belt_locs[0].append([round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100])
+            Buildings.belt_locs[1].append([False, False])
+            Buildings.belt_locs[2].append(belt_loc)
           Buildings.buildings.append([round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100])
           Buildings.machines_recipe.append(0)
           Buildings.rescources.append([[[0,0,0,0]], [0,0,0], [round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100]])
@@ -861,7 +874,7 @@ class buildings:
     self.type = []
     self.input = [pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),-1,'']
     self.pipe_locs = [[], [], [], []]
-    self.belt_locs = []
+    self.belt_locs = [[], [], []]
     self.pipe_types = [[[[-1, 0], [1, 0]], [[-1, 0], [0, 1]], [[-1, 0], [0, 1], [1, 0]], [[-1, 0], [0, 1], [1, 0], [0, -1]]], [[], [], [[-1, 0]], [[1, 0]], []]]
     self.belt_types = [[[[[-1, 0]], [[1, 0]]], [[[-1, 0]], [[1, 0]]], [[[-1, 0]], [[1, 0]]], [[[-1, 0], [0, 1], [1, 0], [0, -1]], [[-1, 0], [0, 1], [1, 0], [0, -1]]]], [[[], []], [[], []], [[], [[-1, 0]]], [[[1, 0]], []], [[], []]]]
     self.time = 0
@@ -1234,7 +1247,7 @@ class buildings:
         screen.blit(img, (350, 410))
     screen.blit(Ui.Exit, (660, 110))
 
-  def pipe(self, i):
+  def movement(self, i):
     text_font = pygame.font.SysFont("Ariel", 110)
     small_font = pygame.font.SysFont("Ariel", 80)
     self.max_capacity = 600
@@ -1298,6 +1311,14 @@ class buildings:
             screen.blit(Ui.Exit, (660, 110))
             pygame.display.update()
           self.pipe_locs[3][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])] = ''
+      elif self.type[i] == 'belt':
+        self.ui = pygame.draw.rect(screen, 'white', (100, 100, 600, 600))
+        img = text_font.render('belt', True, 'black')
+        screen.blit(img, (300, 110))
+        if self.belt_locs[1][self.belt_locs[0].index([self.buildings[i][0], self.buildings[i][1]])][0] != False:
+          screen.blit(pygame.image.load(self.belt_locs[1][self.belt_locs[0].index([self.buildings[i][0], self.buildings[i][1]])][0]), (100, 300))
+          screen.blit(pygame.image.load(self.belt_locs[1][self.belt_locs[0].index([self.buildings[i][0], self.buildings[i][1]])][0]), (600, 300))
+        x, y = pygame.mouse.get_pos()
       for h in range(len(self.pipe_locs[1])):
         for b in range(len(self.pipe_locs[1][h])):
           self.new_pipe_loc = [self.pipe_locs[0][h][0] + self.pipe_locs[1][h][b][0], self.pipe_locs[0][h][1] + self.pipe_locs[1][h][b][1]]
@@ -1310,19 +1331,17 @@ class buildings:
                 self.pipe_locs[2][h] += self.transfer
               if self.pipe_locs[3][h] == '':
                 self.pipe_locs[3][h] = self.pipe_locs[3][self.new_pipe]
+      for h in range(len(self.belt_locs[0])):
+        for b in range(len(self.belt_locs[2][h][0])):
+          self.new_belt_loc = [self.belt_locs[0][h][0] + self.belt_locs[2][h][b][1], self.belt_locs[0][h][1] + self.belt_locs[2][h][b][1]]
+          if self.new_belt_loc in self.belt_locs[0]:
+            self.new_belt = self.belt_locs[0].index(self.new_belt_loc)
+            if [0 - self.belt_locs[1][h][b][0], 0 - self.pipe_locs[1][h][b][1]] in self.belt_locs[1][self.new_belt]:
+              #if self.pipe_locs[2][self.new_pipe] > self.pipe_locs[2][h] and (self.pipe_locs[3][self.new_pipe] == self.pipe_locs[3][h] or self.pipe_locs[3][h] == ''):
+              pass
     else:
       self.type.append(tiles.colours[self.buildings[i][0]][self.buildings[i][1]][0])
     screen.blit(Ui.Exit, (660, 110))
-
-  def belt(self, i):
-    for h in range(len(self.belt_locs)):
-      for b in range(len(self.belt_locs[h])):
-        self.new_belt_loc = [self.belt_locs[0][h][0] + self.belt_locs[1][h][b][0], self.belt_locs[0][h][1] + self.belt_locs[1][h][b][1]]
-        if self.new_belt_loc in self.belt_locs[0]:
-          self.new_belt = self.belt_locs[0].index(self.new_belt_loc)
-          if [0 - self.pipe_locs[1][h][b][0], 0 - self.pipe_locs[1][h][b][1]] in self.pipe_locs[1][self.new_pipe]:
-            if self.pipe_locs[2][self.new_pipe] > self.pipe_locs[2][h] and (self.pipe_locs[3][self.new_pipe] == self.pipe_locs[3][h] or self.pipe_locs[3][h] == ''):
-              pass
   
   def automation(self):
     for i in range(len(self.type)):
@@ -1568,8 +1587,7 @@ while True:
       Buildings.automated_machines(Buildings.i, 'smelter', [[['1','images - Current Version\Inv Copper Ore.png', True]], ['1','images - Current Version\Copper Liquid.png', False]],  [[2, 1]], ['copper liquid', 1, 64], False)
       Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'images - Current Version\Iron Liquid.png', False]], ['1',  'images - Current Version\Iron Ingot.png', True]],  [['iron liquid', 1]], [4, 1, 64], True)
       Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'images - Current Version\Copper Liquid.png', False]], ['1',  'images - Current Version\Copper Ingot.png', True]],  [['copper liquid', 1]], [5, 1, 64], False)
-      Buildings.pipe(Buildings.i)
-      Buildings.belt(Buildings.i)
+      Buildings.movement(Buildings.i)
     Buildings.automation()
   elif py72 == 'Tutorial':
     Ui.tutorial()
