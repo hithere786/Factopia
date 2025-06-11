@@ -601,6 +601,7 @@ class ui:
               Buildings.pipe_locs[3].append('')
           else:
             tiles.colours[round(self.snap_mouse_location[0]) + 100][round(self.snap_mouse_location[1]) + 100] = [imp[2], self.direction]
+<<<<<<< Updated upstream
             Buildings.pipe_locs[0].append([round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100])
             pipe_loc = []
             for i in range(len(Buildings.types[1][Buildings.building.index(imp[2])])):
@@ -611,6 +612,50 @@ class ui:
             Buildings.pipe_locs[1].append(pipe_loc)
             Buildings.pipe_locs[2].append(0)
             Buildings.pipe_locs[3].append('')
+=======
+            if imp[2] == 'belt':
+              belt_loc = [[], []]
+              for i in range(len(Buildings.belt_types[1][0][Buildings.building.index(imp[2])])):
+                belt_loc[0].append(Buildings.belt_types[0].index(Buildings.belt_types[1][0][Buildings.building.index(imp[2])][i]) + self.direction)
+                if belt_loc[0][i] > 3:
+                  belt_loc[0][i] -= 4
+                belt_loc[0][i] = Buildings.belt_types[0][belt_loc[0][i]]
+              for i in range(len(Buildings.belt_types[1][1][Buildings.building.index(imp[2])])):
+                belt_loc[1].append(Buildings.belt_types[0].index(Buildings.belt_types[1][1][Buildings.building.index(imp[2])][i]) + self.direction)
+                if belt_loc[1][i] > 3:
+                  belt_loc[1][i] -= 4
+                belt_loc[1][i] = Buildings.belt_types[0][belt_loc[1][i]]
+              Buildings.belt_locs[0].append([round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100])
+              Buildings.belt_locs[1].append([False, 'images - Current Version\Copper Sheet.png'])
+              Buildings.belt_locs[2].append(belt_loc)
+              Buildings.belt_locs[3].append([0, 60])
+            else:
+              Buildings.pipe_locs[0].append([round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100])
+              pipe_loc = []
+              for i in range(len(Buildings.pipe_types[0][self.type])):
+                pipe_loc.append(Buildings.pipe_types[0][3].index(Buildings.pipe_types[0][self.type][i]) + self.direction)
+                if pipe_loc[i] > 3:
+                  pipe_loc[i] -= 4
+                pipe_loc[i] = Buildings.pipe_types[0][3][pipe_loc[i]]
+              Buildings.pipe_locs[1].append(pipe_loc)
+              Buildings.pipe_locs[2].append(0)
+              Buildings.pipe_locs[3].append('unusable')
+              belt_loc = [[], []]
+              for i in range(len(Buildings.belt_types[1][0][Buildings.building.index(imp[2])])):
+                belt_loc[0].append(Buildings.belt_types[0].index(Buildings.belt_types[1][0][Buildings.building.index(imp[2])][i]) + self.direction)
+                if belt_loc[0][i] > 3:
+                  belt_loc[0][i] -= 4
+                belt_loc[0][i] = Buildings.belt_types[0][belt_loc[0][i]]
+              for i in range(len(Buildings.belt_types[1][1][Buildings.building.index(imp[2])])):
+                belt_loc[1].append(Buildings.belt_types[0].index(Buildings.belt_types[1][1][Buildings.building.index(imp[2])][i]) + self.direction)
+                if belt_loc[1][i] > 3:
+                  belt_loc[1][i] -= 4
+                belt_loc[1][i] = Buildings.belt_types[0][belt_loc[1][i]]
+              Buildings.belt_locs[0].append([round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100])
+              Buildings.belt_locs[1].append([False, 'images - Current Version\Copper Sheet.png'])
+              Buildings.belt_locs[2].append(belt_loc)
+              Buildings.belt_locs[3].append([0, 60])
+>>>>>>> Stashed changes
           Buildings.buildings.append([round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100])
           Buildings.machines_recipe.append(0)
           Buildings.rescources.append([[[0,0,0,0]], [0,0,0], [round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100]])
@@ -747,6 +792,20 @@ class inventory:
     self.Pngs[10] = pygame.image.load('images - Current Version/Rotor.png')
     self.Pngs[11] = pygame.image.load('images - Current Version/iron Crate.png')
     self.Pngs[12] = pygame.image.load('images - Current Version/Hammer.png')
+    self.Name = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+    self.Name[0] = 'images - Current Version/Wood.png'
+    self.Name[1] = 'images - Current Version/Iron Ore.png'
+    self.Name[2] = 'images - Current Version/Copper Ore.png'
+    self.Name[3] = 'images - Current Version/Coal.png'
+    self.Name[4] = 'images - Current Version/iron Ingot.png'
+    self.Name[5] = 'images - Current Version/iron Rod.png'
+    self.Name[6] = 'images - Current Version/iron Plate.png'
+    self.Name[7] = 'images - Current Version/Copper Ingot.png'
+    self.Name[8] = 'images - Current Version/Wire.png'
+    self.Name[9] = 'images - Current Version/Copper Sheet.png'
+    self.Name[10] = 'images - Current Version/Rotor.png'
+    self.Name[11] = 'images - Current Version/iron Crate.png'
+    self.Name[12] = 'images - Current Version/Hammer.png'
     self.items = [0,0,0,0,0,0,0,0,0,0,0,0,0]
     self.num = [0,0,0,0,0,0,0,0,0,0,0,0,0]
     self.Tab = False
@@ -818,7 +877,13 @@ class buildings:
     self.type = []
     self.input = [pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),-1,'']
     self.pipe_locs = [[], [], [], []]
+<<<<<<< Updated upstream
     self.types = [[[[-1, 0], [1, 0]], [[-1, 0], [0, 1]], [[-1, 0], [0, 1], [1, 0]], [[-1, 0], [0, 1], [1, 0], [0, -1]]], [[], [], [[-1, 0]], [[1, 0]]]]
+=======
+    self.belt_locs = [[], [], [], []]
+    self.pipe_types = [[[[-1, 0], [1, 0]], [[-1, 0], [0, 1]], [[-1, 0], [0, 1], [1, 0]], [[-1, 0], [0, 1], [1, 0], [0, -1]]], [[], [], [[-1, 0]], [[1, 0]], []]]
+    self.belt_types = [[[-1, 0], [0, 1], [1, 0], [0, -1]], [[[], [], [[-1, 0]], [], [[-1, 0]]], [[], [], [], [[1, 0]], [[1, 0]]]]]
+>>>>>>> Stashed changes
     self.time = 0
     self.liquids = [['', 'iron liquid', 'copper liquid'], ['white', 'grey', 'orange']]
     self.mouse_button = False
@@ -1195,11 +1260,50 @@ class buildings:
         screen.blit(img, (350, 410))
     screen.blit(Ui.Exit, (660, 110))
 
+<<<<<<< Updated upstream
   def pipe(self, i):
+=======
+  def movement(self):
+    for h in range(len(self.pipe_locs[1])):
+      for b in range(len(self.pipe_locs[1][h])):
+        self.new_pipe_loc = [self.pipe_locs[0][h][0] + self.pipe_locs[1][h][b][0], self.pipe_locs[0][h][1] + self.pipe_locs[1][h][b][1]]
+        if self.new_pipe_loc in self.pipe_locs[0]:
+          self.new_pipe = self.pipe_locs[0].index(self.new_pipe_loc)
+          if [0 - self.pipe_locs[1][h][b][0], 0 - self.pipe_locs[1][h][b][1]] in self.pipe_locs[1][self.new_pipe]:
+            if self.pipe_locs[2][self.new_pipe] > self.pipe_locs[2][h] and (self.pipe_locs[3][self.new_pipe] == self.pipe_locs[3][h] or self.pipe_locs[3][h] == ''):
+              self.transfer = 0.05 * (self.pipe_locs[2][self.new_pipe] - self.pipe_locs[2][h])
+              self.pipe_locs[2][self.new_pipe] -= self.transfer
+              self.pipe_locs[2][h] += self.transfer
+            if self.pipe_locs[3][h] == '' and self.pipe_locs[3][self.new_pipe] in self.liquids[0]:
+              self.pipe_locs[3][h] = self.pipe_locs[3][self.new_pipe]
+    for h in range(len(self.belt_locs[0])):
+      for b in range(len(self.belt_locs[2][h][0])):
+        self.new_belt_loc = [self.belt_locs[0][h][0] - self.belt_locs[2][h][0][b][0], self.belt_locs[0][h][1] - self.belt_locs[2][h][0][b][1]]
+        if self.new_belt_loc in self.belt_locs[0]:
+          self.new_belt = self.belt_locs[0].index(self.new_belt_loc)
+          if [0 - self.belt_locs[2][h][0][b][0], 0 - self.belt_locs[2][h][0][b][1]] in self.belt_locs[2][self.new_belt][1]:
+            if self.belt_locs[3][self.new_belt][0] == 0 and self.belt_locs[3][h][1] == 60:
+              self.belt_locs[1][self.new_belt][0] = self.belt_locs[1][h][1]
+              self.belt_locs[1][h][1] = 0
+              self.belt_locs[3][self.new_belt][0] = 1
+              self.belt_locs[3][h][1] = 0
+      if self.belt_locs[3][h][1] == 0 and self.belt_locs[3][h][0] == 60:
+        self.belt_locs[1][h][1] = self.belt_locs[1][h][0]
+        self.belt_locs[1][h][0] = 0
+        self.belt_locs[3][h][1] = 1
+        self.belt_locs[3][h][0] = 0
+      for x in range(2):
+        if self.belt_locs[3][h][x] < 60 and self.belt_locs[3][h][x] != 0:
+          self.belt_locs[3][h][x] += 1
+        if self.belt_locs[3][h][x] != 0:
+          screen.blit(pygame.image.load(self.belt_locs[1][h][x]), ((self.belt_locs[0][h][0] - 100) * 60 + tiles.x - 30 + self.belt_locs[3][h][x]/2 + x * 30,(self.belt_locs[0][h][1] - 100) * 60 + tiles.y + 15))
+  
+  def movement_ui(self, i):
+>>>>>>> Stashed changes
     text_font = pygame.font.SysFont("Ariel", 110)
     small_font = pygame.font.SysFont("Ariel", 80)
     self.max_capacity = 600
-    if len(self.type) > i:
+    if len(self.type) > i and i > -1:
       if self.type[i] == 'pipe':
         self.amount = self.pipe_locs[2][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])]
         self.ui = pygame.draw.rect(screen, 'white', (100, 100, 600, 600))
@@ -1229,19 +1333,6 @@ class buildings:
               self.pipe_locs[2][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])] -= 1
             else:
               self.pipe_locs[2][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])] -= 10
-            for h in range(len(self.pipe_locs[1])):
-              for b in range(len(self.pipe_locs[1][h])):
-                self.new_pipe_loc = [self.pipe_locs[0][h][0] + self.pipe_locs[1][h][b][0], self.pipe_locs[0][h][1] + self.pipe_locs[1][h][b][1]]
-                if self.new_pipe_loc in self.pipe_locs[0]:
-                  self.new_pipe = self.pipe_locs[0].index(self.new_pipe_loc)
-                  if [0 - self.pipe_locs[1][h][b][0], 0 - self.pipe_locs[1][h][b][1]] in self.pipe_locs[1][self.new_pipe]:
-                    if self.pipe_locs[2][self.new_pipe] > self.pipe_locs[2][h] and (self.pipe_locs[3][self.new_pipe] == self.pipe_locs[3][h] or self.pipe_locs[3][h] == ''):
-                      self.transfer = 0.05 * (self.pipe_locs[2][self.new_pipe] - self.pipe_locs[2][h])
-                      self.pipe_locs[2][self.new_pipe] -= self.transfer
-                      self.pipe_locs[2][h] += self.transfer
-                    if self.pipe_locs[3][h] == '':
-                      self.pipe_locs[3][h] = self.pipe_locs[3][self.new_pipe]
-            self.amount = self.pipe_locs[2][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])]
             self.ui = pygame.draw.rect(screen, 'white', (100, 100, 600, 600))
             img = text_font.render('pipe', True, 'black')
             screen.blit(img, (300, 110))
@@ -1259,6 +1350,7 @@ class buildings:
             screen.blit(Ui.Exit, (660, 110))
             pygame.display.update()
           self.pipe_locs[3][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])] = ''
+<<<<<<< Updated upstream
       for h in range(len(self.pipe_locs[1])):
         for b in range(len(self.pipe_locs[1][h])):
           self.new_pipe_loc = [self.pipe_locs[0][h][0] + self.pipe_locs[1][h][b][0], self.pipe_locs[0][h][1] + self.pipe_locs[1][h][b][1]]
@@ -1272,14 +1364,30 @@ class buildings:
               if self.pipe_locs[3][h] == '':
                 self.pipe_locs[3][h] = self.pipe_locs[3][self.new_pipe]
     else:
+=======
+      elif self.type[i] == 'belt':
+        self.ui = pygame.draw.rect(screen, 'white', (100, 100, 600, 600))
+        img = text_font.render('belt', True, 'black')
+        screen.blit(img, (300, 110))
+        if self.belt_locs[1][self.belt_locs[0].index([self.buildings[i][0], self.buildings[i][1]])][0] != False:
+          screen.blit(pygame.transform.scale(pygame.image.load(self.belt_locs[1][self.belt_locs[0].index([self.buildings[i][0], self.buildings[i][1]])][0]), (100, 100)), (150, 300))
+        if self.belt_locs[1][self.belt_locs[0].index([self.buildings[i][0], self.buildings[i][1]])][1] != False:
+          screen.blit(pygame.transform.scale(pygame.image.load(self.belt_locs[1][self.belt_locs[0].index([self.buildings[i][0], self.buildings[i][1]])][1]), (100, 100)), (550, 300))
+        x, y = pygame.mouse.get_pos()
+        screen.blit(Ui.Exit, (660, 110))
+    elif i > -1:
+>>>>>>> Stashed changes
       self.type.append(tiles.colours[self.buildings[i][0]][self.buildings[i][1]][0])
-    screen.blit(Ui.Exit, (660, 110))
-  
+
   def automation(self):
     for i in range(len(self.type)):
       if (self.type[i] == 'smelter' or self.type[i] == 'molder') and Buildings.machines_recipe[i] != 0:
         if self.rescources[i][1][1] in self.liquids[0]:
           self.rescources[i][1][0] = self.pipe_locs[2][self.pipe_locs[0].index(self.rescources[i][2])]
+        if Buildings.belt_locs[3][self.belt_locs[0].index(self.rescources[i][2])][0] == 60:
+          Buildings.belt_locs[3][self.belt_locs[0].index(self.rescources[i][2])][0] = 0
+          Buildings.belt_locs[1][self.belt_locs[0].index(self.rescources[i][2])][0] = False
+          self.rescources[i][0][0][0] += 1
         elif self.rescources[i][0][0][1] in self.liquids[0]:
           self.rescources[i][0][0][0] = self.pipe_locs[2][self.pipe_locs[0].index(self.rescources[i][2])]
         if self.rescources[i][0][0][0] >= self.rescources[i][0][0][2] and self.time % self.rescources[i][0][0][3] == 0:
@@ -1291,9 +1399,19 @@ class buildings:
         elif self.rescources[i][0][0][1] in self.liquids[0]:
           self.pipe_locs[2][self.pipe_locs[0].index(self.rescources[i][2])] = self.rescources[i][0][0][0]
           self.pipe_locs[3][self.pipe_locs[0].index(self.rescources[i][2])] = self.rescources[i][0][0][1]
+        if Buildings.belt_locs[3][self.belt_locs[0].index(self.rescources[i][2])][1] == 0 and not (self.rescources[i][1][1] in self.liquids[0]):
+          Buildings.belt_locs[3][self.belt_locs[0].index(self.rescources[i][2])][1] = 60
+          Buildings.belt_locs[1][self.belt_locs[0].index(self.rescources[i][2])][1] = inv.Name[self.rescources[i][1][1]]
       if self.machines_recipe[i] == 0 and (self.rescources[i][1][0] != 0 or self.rescources[i][0][0][1] != 0):
         self.pipe_locs[2][self.pipe_locs[0].index(self.rescources[i][2])] = 0
         self.pipe_locs[3][self.pipe_locs[0].index(self.rescources[i][2])] = 'unusable'
+    
+  def covers(self):
+    for i in range(len(self.buildings)):
+      if tiles.colours[self.buildings[i][0]][self.buildings[i][1]][0] == 'smelter':
+        screen.blit(pygame.image.load('images - Current Version\Smelter Cover.png'), ((self.buildings[i][0] - 100) * 60 + tiles.x,(self.buildings[i][1] - 100) * 60 + tiles.y))
+      elif tiles.colours[self.buildings[i][0]][self.buildings[i][1]][0] == 'molder':
+        screen.blit(pygame.image.load('images - Current Version\Molder Cover.png'), ((self.buildings[i][0] - 100) * 60 + tiles.x,(self.buildings[i][1] - 100) * 60 + tiles.y))
 
 screen = pygame.display.set_mode((800 , 800))
 
@@ -1315,7 +1433,7 @@ while True:
         if event.key == pygame.K_BACKSPACE:
           Buildings.input[5] = Buildings.input[5][:-1]
         elif event.key == pygame.K_RETURN:
-          if Buildings.input[4] == 0 and int(Buildings.input[5]) < inv.items[Buildings.imp[0][0]] + 1:
+          if Buildings.input[4] == 0 and int(Buildings.input[5]) < inv.items[Buildings.imp[0][1]] + 1:
             inv.items[Buildings.imp[0][0]] -= int(Buildings.input[5])
             Buildings.rescources[Buildings.i][0][0][0] += int(Buildings.input[5])
           elif Buildings.input[4] == 1 and int(Buildings.input[5]) < Buildings.rescources[Buildings.i][0][0][0] + 1:
@@ -1485,6 +1603,8 @@ while True:
       inv.UI('Rotor', 10)
       inv.UI('Iron Crate', 11)
       inv.UI('Hammer', 12)
+    Buildings.movement()
+    Buildings.covers()
     if Ui.build_menu == True and Buildings.i == -1:
       Ui.new_turn = True
       # [number, [['amount 1', 'amount image 1'], ['amount 2', 'amount image 2']], 'name', [Ui.lower_case_name, Ui.upper_case_name], [1 time use (True/False), [[inv.items[?], amount, ?], [inv.items[?], amount, ?]]]]
@@ -1516,8 +1636,13 @@ while True:
       Buildings.automated_machines(Buildings.i, 'smelter', [[['1','images - Current Version\Inv Iron Ore.png', True]], ['1','images - Current Version\Iron Liquid.png', False]],  [[1, 1]], ['iron liquid', 1, 64], True)
       Buildings.automated_machines(Buildings.i, 'smelter', [[['1','images - Current Version\Inv Copper Ore.png', True]], ['1','images - Current Version\Copper Liquid.png', False]],  [[2, 1]], ['copper liquid', 1, 64], False)
       Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'images - Current Version\Iron Liquid.png', False]], ['1',  'images - Current Version\Iron Ingot.png', True]],  [['iron liquid', 1]], [4, 1, 64], True)
+<<<<<<< Updated upstream
       Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'images - Current Version\Copper Liquid.png', False]], ['1',  'images - Current Version\Copper Ingot.png', True]],  [['copper liquid', 1]], [5, 1, 64], False)
       Buildings.pipe(Buildings.i)
+=======
+      Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'images - Current Version\Copper Liquid.png', False]], ['1',  'images - Current Version\Copper Ingot.png', True]],  [['copper liquid', 1]], [7, 1, 64], False)
+      Buildings.movement_ui(Buildings.i)
+>>>>>>> Stashed changes
     Buildings.automation()
   elif py72 == 'Tutorial':
     Ui.tutorial()
