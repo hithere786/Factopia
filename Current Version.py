@@ -639,6 +639,38 @@ class ui:
                 pipe_loc[i] = Buildings.pipe_types[0][3][pipe_loc[i]]
               Buildings.pipe_locs[1].append(pipe_loc)
               Buildings.pipe_locs[2].append(0)
+<<<<<<< Updated upstream
+=======
+              Buildings.pipe_locs[3].append('')
+          else:
+            tiles.colours[round(self.snap_mouse_location[0]) + 100][round(self.snap_mouse_location[1]) + 100] = [imp[2], self.direction]
+            if imp[2] == 'belt':
+              belt_loc = [[], []]
+              for i in range(len(Buildings.belt_types[1][0][Buildings.building.index(imp[2])])):
+                belt_loc[0].append(Buildings.belt_types[0].index(Buildings.belt_types[1][0][Buildings.building.index(imp[2])][i]) + self.direction)
+                if belt_loc[0][i] > 3:
+                  belt_loc[0][i] -= 4
+                belt_loc[0][i] = Buildings.belt_types[0][belt_loc[0][i]]
+              for i in range(len(Buildings.belt_types[1][1][Buildings.building.index(imp[2])])):
+                belt_loc[1].append(Buildings.belt_types[0].index(Buildings.belt_types[1][1][Buildings.building.index(imp[2])][i]) + self.direction)
+                if belt_loc[1][i] > 3:
+                  belt_loc[1][i] -= 4
+                belt_loc[1][i] = Buildings.belt_types[0][belt_loc[1][i]]
+              Buildings.belt_locs[0].append([round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100])
+              Buildings.belt_locs[1].append([False, 'images - Current Version\Copper Sheet.png'])
+              Buildings.belt_locs[2].append(belt_loc)
+              Buildings.belt_locs[3].append([0, 60])
+            else:
+              Buildings.pipe_locs[0].append([round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100])
+              pipe_loc = []
+              for i in range(len(Buildings.pipe_types[0][self.type])):
+                pipe_loc.append(Buildings.pipe_types[0][3].index(Buildings.pipe_types[0][self.type][i]) + self.direction)
+                if pipe_loc[i] > 3:
+                  pipe_loc[i] -= 4
+                pipe_loc[i] = Buildings.pipe_types[0][3][pipe_loc[i]]
+              Buildings.pipe_locs[1].append(pipe_loc)
+              Buildings.pipe_locs[2].append(0)
+>>>>>>> Stashed changes
               Buildings.pipe_locs[3].append('unusable')
               belt_loc = [[], []]
               for i in range(len(Buildings.belt_types[1][0][Buildings.building.index(imp[2])])):
@@ -655,6 +687,9 @@ class ui:
               Buildings.belt_locs[1].append([False, 'images - Current Version\Copper Sheet.png'])
               Buildings.belt_locs[2].append(belt_loc)
               Buildings.belt_locs[3].append([0, 60])
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
           Buildings.buildings.append([round(self.snap_mouse_location[0]) + 100, round(self.snap_mouse_location[1]) + 100])
           Buildings.machines_recipe.append(0)
@@ -878,7 +913,13 @@ class buildings:
     self.input = [pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),pygame.draw.rect(screen, 'orange', (30, 30, 30, 30)),-1,'']
     self.pipe_locs = [[], [], [], []]
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     self.types = [[[[-1, 0], [1, 0]], [[-1, 0], [0, 1]], [[-1, 0], [0, 1], [1, 0]], [[-1, 0], [0, 1], [1, 0], [0, -1]]], [[], [], [[-1, 0]], [[1, 0]]]]
+=======
+    self.belt_locs = [[], [], [], []]
+    self.pipe_types = [[[[-1, 0], [1, 0]], [[-1, 0], [0, 1]], [[-1, 0], [0, 1], [1, 0]], [[-1, 0], [0, 1], [1, 0], [0, -1]]], [[], [], [[-1, 0]], [[1, 0]], []]]
+    self.belt_types = [[[-1, 0], [0, 1], [1, 0], [0, -1]], [[[], [], [[-1, 0]], [], [[-1, 0]]], [[], [], [], [[1, 0]], [[1, 0]]]]]
+>>>>>>> Stashed changes
 =======
     self.belt_locs = [[], [], [], []]
     self.pipe_types = [[[[-1, 0], [1, 0]], [[-1, 0], [0, 1]], [[-1, 0], [0, 1], [1, 0]], [[-1, 0], [0, 1], [1, 0], [0, -1]]], [[], [], [[-1, 0]], [[1, 0]], []]]
@@ -1261,8 +1302,11 @@ class buildings:
     screen.blit(Ui.Exit, (660, 110))
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   def pipe(self, i):
 =======
+=======
+>>>>>>> Stashed changes
   def movement(self):
     for h in range(len(self.pipe_locs[1])):
       for b in range(len(self.pipe_locs[1][h])):
@@ -1299,6 +1343,9 @@ class buildings:
           screen.blit(pygame.image.load(self.belt_locs[1][h][x]), ((self.belt_locs[0][h][0] - 100) * 60 + tiles.x - 30 + self.belt_locs[3][h][x]/2 + x * 30,(self.belt_locs[0][h][1] - 100) * 60 + tiles.y + 15))
   
   def movement_ui(self, i):
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     text_font = pygame.font.SysFont("Ariel", 110)
     small_font = pygame.font.SysFont("Ariel", 80)
@@ -1351,6 +1398,7 @@ class buildings:
             pygame.display.update()
           self.pipe_locs[3][self.pipe_locs[0].index([self.buildings[i][0], self.buildings[i][1]])] = ''
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       for h in range(len(self.pipe_locs[1])):
         for b in range(len(self.pipe_locs[1][h])):
           self.new_pipe_loc = [self.pipe_locs[0][h][0] + self.pipe_locs[1][h][b][0], self.pipe_locs[0][h][1] + self.pipe_locs[1][h][b][1]]
@@ -1365,6 +1413,8 @@ class buildings:
                 self.pipe_locs[3][h] = self.pipe_locs[3][self.new_pipe]
     else:
 =======
+=======
+>>>>>>> Stashed changes
       elif self.type[i] == 'belt':
         self.ui = pygame.draw.rect(screen, 'white', (100, 100, 600, 600))
         img = text_font.render('belt', True, 'black')
@@ -1376,6 +1426,9 @@ class buildings:
         x, y = pygame.mouse.get_pos()
         screen.blit(Ui.Exit, (660, 110))
     elif i > -1:
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
       self.type.append(tiles.colours[self.buildings[i][0]][self.buildings[i][1]][0])
 
@@ -1637,8 +1690,13 @@ while True:
       Buildings.automated_machines(Buildings.i, 'smelter', [[['1','images - Current Version\Inv Copper Ore.png', True]], ['1','images - Current Version\Copper Liquid.png', False]],  [[2, 1]], ['copper liquid', 1, 64], False)
       Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'images - Current Version\Iron Liquid.png', False]], ['1',  'images - Current Version\Iron Ingot.png', True]],  [['iron liquid', 1]], [4, 1, 64], True)
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'images - Current Version\Copper Liquid.png', False]], ['1',  'images - Current Version\Copper Ingot.png', True]],  [['copper liquid', 1]], [5, 1, 64], False)
       Buildings.pipe(Buildings.i)
+=======
+      Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'images - Current Version\Copper Liquid.png', False]], ['1',  'images - Current Version\Copper Ingot.png', True]],  [['copper liquid', 1]], [7, 1, 64], False)
+      Buildings.movement_ui(Buildings.i)
+>>>>>>> Stashed changes
 =======
       Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'images - Current Version\Copper Liquid.png', False]], ['1',  'images - Current Version\Copper Ingot.png', True]],  [['copper liquid', 1]], [7, 1, 64], False)
       Buildings.movement_ui(Buildings.i)
