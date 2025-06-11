@@ -671,6 +671,9 @@ class ui:
               Buildings.pipe_locs[1].append(pipe_loc)
               Buildings.pipe_locs[2].append(0)
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -692,6 +695,9 @@ class ui:
               Buildings.belt_locs[3].append([0, 60])
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -921,7 +927,13 @@ class buildings:
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     self.types = [[[[-1, 0], [1, 0]], [[-1, 0], [0, 1]], [[-1, 0], [0, 1], [1, 0]], [[-1, 0], [0, 1], [1, 0], [0, -1]]], [[], [], [[-1, 0]], [[1, 0]]]]
+=======
+    self.belt_locs = [[], [], [], []]
+    self.pipe_types = [[[[-1, 0], [1, 0]], [[-1, 0], [0, 1]], [[-1, 0], [0, 1], [1, 0]], [[-1, 0], [0, 1], [1, 0], [0, -1]]], [[], [], [[-1, 0]], [[1, 0]], []]]
+    self.belt_types = [[[-1, 0], [0, 1], [1, 0], [0, -1]], [[[], [], [[-1, 0]], [], [[-1, 0]]], [[], [], [], [[1, 0]], [[1, 0]]]]]
+>>>>>>> Stashed changes
 =======
     self.belt_locs = [[], [], [], []]
     self.pipe_types = [[[[-1, 0], [1, 0]], [[-1, 0], [0, 1]], [[-1, 0], [0, 1], [1, 0]], [[-1, 0], [0, 1], [1, 0], [0, -1]]], [[], [], [[-1, 0]], [[1, 0]], []]]
@@ -1316,8 +1328,11 @@ class buildings:
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   def pipe(self, i):
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -1360,6 +1375,9 @@ class buildings:
   def movement_ui(self, i):
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -1418,6 +1436,7 @@ class buildings:
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       for h in range(len(self.pipe_locs[1])):
         for b in range(len(self.pipe_locs[1][h])):
           self.new_pipe_loc = [self.pipe_locs[0][h][0] + self.pipe_locs[1][h][b][0], self.pipe_locs[0][h][1] + self.pipe_locs[1][h][b][1]]
@@ -1436,6 +1455,8 @@ class buildings:
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
       elif self.type[i] == 'belt':
         self.ui = pygame.draw.rect(screen, 'white', (100, 100, 600, 600))
         img = text_font.render('belt', True, 'black')
@@ -1449,6 +1470,9 @@ class buildings:
     elif i > -1:
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -1716,8 +1740,13 @@ while True:
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'images - Current Version\Copper Liquid.png', False]], ['1',  'images - Current Version\Copper Ingot.png', True]],  [['copper liquid', 1]], [5, 1, 64], False)
       Buildings.pipe(Buildings.i)
+=======
+      Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'images - Current Version\Copper Liquid.png', False]], ['1',  'images - Current Version\Copper Ingot.png', True]],  [['copper liquid', 1]], [7, 1, 64], False)
+      Buildings.movement_ui(Buildings.i)
+>>>>>>> Stashed changes
 =======
       Buildings.automated_machines(Buildings.i, 'molder', [[['1', 'images - Current Version\Copper Liquid.png', False]], ['1',  'images - Current Version\Copper Ingot.png', True]],  [['copper liquid', 1]], [7, 1, 64], False)
       Buildings.movement_ui(Buildings.i)
